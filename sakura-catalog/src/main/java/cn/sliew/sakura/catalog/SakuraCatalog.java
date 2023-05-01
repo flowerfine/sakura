@@ -26,11 +26,15 @@ import cn.sliew.sakura.catalog.service.CatalogService;
 import cn.sliew.sakura.catalog.service.dto.CatalogDatabaseDTO;
 import cn.sliew.sakura.catalog.service.dto.CatalogFunctionDTO;
 import cn.sliew.sakura.catalog.service.dto.CatalogTableDTO;
+import cn.sliew.sakura.catalog.service.impl.CatalogServiceImpl;
+import cn.sliew.sakura.dao.util.MybatisUtil;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.flink.table.catalog.*;
 import org.apache.flink.table.catalog.exceptions.*;
 import org.apache.flink.table.catalog.stats.CatalogColumnStatistics;
 import org.apache.flink.table.catalog.stats.CatalogTableStatistics;
 import org.apache.flink.table.expressions.Expression;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,20 +42,33 @@ import java.util.stream.Collectors;
 
 public class SakuraCatalog extends AbstractCatalog {
 
+    private final String driver;
+    private final String jdbcUrl;
+    private final String username;
+    private final String password;
+    private HikariDataSource dataSource;
     private CatalogService catalogService;
 
-    public SakuraCatalog(String name, String defaultDatabase) {
-        super(name, defaultDatabase);
+    public SakuraCatalog(String name, String driver, String jdbcUrl, String username, String password) {
+        super(name, "sakura");
+        this.driver = driver;
+        this.jdbcUrl = jdbcUrl;
+        this.username = username;
+        this.password = password;
     }
 
     @Override
     public void open() throws CatalogException {
-
+        this.dataSource = MybatisUtil.createDataSource(driver, jdbcUrl, username, password);
+        SqlSessionFactory sqlSessionFactory = MybatisUtil.getSqlSessionFactory(dataSource);
+        this.catalogService = new CatalogServiceImpl(sqlSessionFactory);
     }
 
     @Override
     public void close() throws CatalogException {
-
+        if (dataSource != null && dataSource.isClosed() == false) {
+            dataSource.close();
+        }
     }
 
     @Override

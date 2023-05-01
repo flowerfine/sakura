@@ -38,11 +38,10 @@ import java.util.stream.Collectors;
 
 public class SakuraCatalog extends AbstractCatalog {
 
-    private final CatalogService catalogService;
+    private CatalogService catalogService;
 
-    public SakuraCatalog(String name, String defaultDatabase, CatalogService catalogService) {
+    public SakuraCatalog(String name, String defaultDatabase) {
         super(name, defaultDatabase);
-        this.catalogService = catalogService;
     }
 
     @Override

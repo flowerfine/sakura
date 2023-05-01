@@ -18,7 +18,7 @@
 
 package cn.sliew.sakura.catalog.service.dto;
 
-import cn.sliew.scaleph.common.dict.catalog.CatalogFunctionLanguage;
+import cn.sliew.sakura.common.dict.CatalogFunctionLanguage;
 import lombok.Data;
 
 /**

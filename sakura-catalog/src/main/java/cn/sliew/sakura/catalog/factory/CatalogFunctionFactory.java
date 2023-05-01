@@ -18,8 +18,8 @@
 
 package cn.sliew.sakura.catalog.factory;
 
-import cn.sliew.scaleph.catalog.service.dto.CatalogFunctionDTO;
-import cn.sliew.scaleph.common.dict.catalog.CatalogFunctionLanguage;
+import cn.sliew.sakura.catalog.service.dto.CatalogFunctionDTO;
+import cn.sliew.sakura.common.dict.CatalogFunctionLanguage;
 import org.apache.flink.table.catalog.CatalogFunction;
 import org.apache.flink.table.catalog.CatalogFunctionImpl;
 import org.apache.flink.table.catalog.FunctionLanguage;

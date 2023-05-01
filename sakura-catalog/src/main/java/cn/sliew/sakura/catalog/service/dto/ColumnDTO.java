@@ -18,7 +18,7 @@
 
 package cn.sliew.sakura.catalog.service.dto;
 
-import cn.sliew.scaleph.common.dict.catalog.CatalogColumnType;
+import cn.sliew.sakura.common.dict.CatalogColumnType;
 import lombok.Data;
 
 /**

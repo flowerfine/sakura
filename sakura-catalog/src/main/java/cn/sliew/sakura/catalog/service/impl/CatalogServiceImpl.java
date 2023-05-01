@@ -25,6 +25,7 @@ import cn.sliew.sakura.catalog.service.convert.CatalogTableConvert;
 import cn.sliew.sakura.catalog.service.dto.CatalogDatabaseDTO;
 import cn.sliew.sakura.catalog.service.dto.CatalogFunctionDTO;
 import cn.sliew.sakura.catalog.service.dto.CatalogTableDTO;
+import cn.sliew.sakura.common.dict.CatalogTableKind;
 import cn.sliew.sakura.dao.entity.CatalogDatabase;
 import cn.sliew.sakura.dao.entity.CatalogFunction;
 import cn.sliew.sakura.dao.entity.CatalogTable;

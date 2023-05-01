@@ -18,13 +18,13 @@
 
 package cn.sliew.sakura.catalog.factory;
 
-import cn.sliew.milky.common.exception.Rethrower;
-import cn.sliew.scaleph.catalog.service.dto.ColumnDTO;
-import cn.sliew.scaleph.catalog.service.dto.SchemaDTO;
-import cn.sliew.scaleph.catalog.service.dto.UniqueConstraintDTO;
-import cn.sliew.scaleph.catalog.service.dto.WatermarkDTO;
-import cn.sliew.scaleph.common.dict.catalog.CatalogColumnType;
-import cn.sliew.scaleph.common.dict.catalog.CatalogConstraintType;
+import cn.sliew.sakura.catalog.service.dto.ColumnDTO;
+import cn.sliew.sakura.catalog.service.dto.SchemaDTO;
+import cn.sliew.sakura.catalog.service.dto.UniqueConstraintDTO;
+import cn.sliew.sakura.catalog.service.dto.WatermarkDTO;
+import cn.sliew.sakura.common.dict.CatalogColumnType;
+import cn.sliew.sakura.common.dict.CatalogConstraintType;
+import cn.sliew.sakura.common.exception.Rethrower;
 import org.apache.flink.table.api.Schema;
 import org.apache.flink.table.api.TableException;
 import org.apache.flink.table.catalog.Column;

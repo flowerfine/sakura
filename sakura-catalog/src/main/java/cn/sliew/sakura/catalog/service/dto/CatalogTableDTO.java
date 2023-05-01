@@ -18,7 +18,7 @@
 
 package cn.sliew.sakura.catalog.service.dto;
 
-import cn.sliew.scaleph.common.dict.catalog.CatalogTableKind;
+import cn.sliew.sakura.common.dict.CatalogTableKind;
 import lombok.Data;
 
 import java.util.Map;

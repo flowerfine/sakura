@@ -18,8 +18,8 @@
 
 package cn.sliew.sakura.catalog.service.convert;
 
-
 import cn.sliew.sakura.catalog.service.dto.CatalogFunctionDTO;
+import cn.sliew.sakura.common.util.JacksonUtil;
 import cn.sliew.sakura.dao.entity.CatalogFunction;
 
 public enum CatalogFunctionConvert implements BaseConvert<CatalogFunction, CatalogFunctionDTO> {
@@ -27,11 +27,11 @@ public enum CatalogFunctionConvert implements BaseConvert<CatalogFunction, Catal
 
     @Override
     public CatalogFunction toDo(CatalogFunctionDTO dto) {
-        return null;
+        return JacksonUtil.deepCopy(dto, CatalogFunction.class);
     }
 
     @Override
     public CatalogFunctionDTO toDto(CatalogFunction entity) {
-        return null;
+        return JacksonUtil.deepCopy(entity, CatalogFunctionDTO.class);
     }
 }

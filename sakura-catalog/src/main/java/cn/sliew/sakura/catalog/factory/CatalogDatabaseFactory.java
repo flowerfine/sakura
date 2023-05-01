@@ -18,7 +18,7 @@
 
 package cn.sliew.sakura.catalog.factory;
 
-import cn.sliew.scaleph.catalog.service.dto.CatalogDatabaseDTO;
+import cn.sliew.sakura.catalog.service.dto.CatalogDatabaseDTO;
 import org.apache.flink.table.catalog.CatalogDatabase;
 import org.apache.flink.table.catalog.CatalogDatabaseImpl;
 

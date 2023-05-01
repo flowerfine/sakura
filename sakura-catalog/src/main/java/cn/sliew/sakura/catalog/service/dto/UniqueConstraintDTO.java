@@ -18,7 +18,7 @@
 
 package cn.sliew.sakura.catalog.service.dto;
 
-import cn.sliew.scaleph.common.dict.catalog.CatalogConstraintType;
+import cn.sliew.sakura.common.dict.CatalogConstraintType;
 import lombok.Data;
 
 import java.util.List;

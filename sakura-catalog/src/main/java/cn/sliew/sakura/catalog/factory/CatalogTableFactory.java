@@ -18,9 +18,9 @@
 
 package cn.sliew.sakura.catalog.factory;
 
-import cn.sliew.scaleph.catalog.SakuraCatalogTable;
-import cn.sliew.scaleph.catalog.service.dto.CatalogTableDTO;
-import cn.sliew.scaleph.common.dict.catalog.CatalogTableKind;
+import cn.sliew.sakura.catalog.SakuraCatalogTable;
+import cn.sliew.sakura.catalog.service.dto.CatalogTableDTO;
+import cn.sliew.sakura.common.dict.CatalogTableKind;
 import org.apache.flink.table.api.Schema;
 import org.apache.flink.table.catalog.CatalogBaseTable;
 import org.apache.flink.table.catalog.ResolvedCatalogTable;

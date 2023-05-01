@@ -23,7 +23,6 @@ import cn.sliew.sakura.common.util.CodecUtil;
 import cn.sliew.sakura.common.util.JacksonUtil;
 import cn.sliew.sakura.dao.entity.CatalogDatabase;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.type.TypeReference;
-import org.springframework.beans.BeanUtils;
 
 import java.util.Map;
 
@@ -32,16 +31,14 @@ public enum CatalogDatabaseConvert implements BaseConvert<CatalogDatabase, Catal
 
     @Override
     public CatalogDatabase toDo(CatalogDatabaseDTO dto) {
-        CatalogDatabase entity = new CatalogDatabase();
-        BeanUtils.copyProperties(dto, entity);
+        CatalogDatabase entity = JacksonUtil.deepCopy(dto, CatalogDatabase.class);
         entity.setProperties(CodecUtil.encrypt(JacksonUtil.toJsonString(dto.getProperties())));
         return entity;
     }
 
     @Override
     public CatalogDatabaseDTO toDto(CatalogDatabase entity) {
-        CatalogDatabaseDTO dto = new CatalogDatabaseDTO();
-        BeanUtils.copyProperties(entity, dto);
+        CatalogDatabaseDTO dto = JacksonUtil.deepCopy(entity, CatalogDatabaseDTO.class);
         Map<String, String> properties = JacksonUtil.parseJsonString(CodecUtil.decrypt(entity.getProperties()), new TypeReference<Map<String, String>>() {
         });
         dto.setProperties(properties);

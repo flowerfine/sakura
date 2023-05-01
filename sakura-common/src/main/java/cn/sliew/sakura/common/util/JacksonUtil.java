@@ -3,6 +3,7 @@ package cn.sliew.sakura.common.util;
 import cn.sliew.sakura.common.exception.Rethrower;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.type.TypeReference;
@@ -151,5 +152,16 @@ public class JacksonUtil {
         }
 
         return false;
+    }
+
+    public static <S, T> T deepCopy(S source, Class<T> clazz) {
+        try {
+            JsonNode jsonNode = OBJECT_MAPPER.valueToTree(source);
+            return OBJECT_MAPPER.treeToValue(jsonNode, clazz);
+        } catch (JsonProcessingException e) {
+            log.error("property deep copy failed! source: {}, target: {}", source, clazz.getName(), e);
+            Rethrower.throwAs(e);
+            return null;
+        }
     }
 }

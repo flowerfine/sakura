@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  pull_request:
+    paths-ignore: ['docs/**', '**/*.md', '**/*.drawio', '**/*.svg' ]
+  push:
+    paths-ignore: ['docs/**', '**/*.md', '**/*.drawio', '**/*.svg' ]
+  schedule:
+    - cron: '0 20 * * *' # automatic test while every day on 04:00 am at UTC+10
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: github.repository == 'flowerfine/sakura'
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        jdk: [ 11, 17 ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Java JDK ${{ matrix.jdk }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.jdk }}
+          distribution: temurin
+          cache: maven
+      - name: Build with Maven
+        timeout-minutes: 360
+        run: ./mvnw -B -U -T 4 clean package
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./**/target/site/jacoco/jacoco.xml
+          verbose: true
+      
+      

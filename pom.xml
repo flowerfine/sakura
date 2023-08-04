@@ -51,6 +51,46 @@
         <guava.version>31.0-jre</guava.version>
     </properties>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>git@github.com:flowerfine/sakura.git</connection>
+        <developerConnection>scm:git:git@github.com:flowerfine/sakura.git</developerConnection>
+        <url>https://github.com/flowerfine/sakura</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>kalencaya</name>
+            <email>1942460489@qq.com</email>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>Github Issue</system>
+        <url>https://github.com/flowerfine/sakura/issues</url>
+    </issueManagement>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus</id>
+            <name>Sonatype Nexus Release</name>
+            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>

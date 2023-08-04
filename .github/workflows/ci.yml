@@ -30,7 +30,7 @@ jobs:
           cache: maven
       - name: Build with Maven
         timeout-minutes: 360
-        run: ./mvnw -B -U -T 4 clean package
+        run: ./mvnw -B clean package
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:

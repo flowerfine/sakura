@@ -21,17 +21,19 @@ package cn.sliew.sakura.dao.util;
 import cn.sliew.sakura.common.exception.Rethrower;
 import cn.sliew.sakura.dao.meta.MetaHandler;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.baomidou.mybatisplus.core.MybatisXMLLanguageDriver;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler;
 import com.baomidou.mybatisplus.core.toolkit.GlobalConfigUtils;
-import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.logging.slf4j.Slf4jImpl;
 import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.scripting.LanguageDriverRegistry;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 import javax.sql.DataSource;
@@ -75,8 +77,10 @@ public enum MybatisUtil {
 
     private static SqlSessionFactory createSqlSessionFactory(DataSource dataSource) {
         try {
-
             MybatisConfiguration configuration = new MybatisConfiguration();
+            LanguageDriverRegistry languageRegistry = configuration.getLanguageRegistry();
+            languageRegistry.register(MybatisXMLLanguageDriver.class);
+            languageRegistry.setDefaultDriverClass(MybatisXMLLanguageDriver.class);
             configuration.setDefaultEnumTypeHandler(MybatisEnumTypeHandler.class);
             configuration.setMapUnderscoreToCamelCase(true);
             configuration.setLogImpl(Slf4jImpl.class);
@@ -87,11 +91,9 @@ public enum MybatisUtil {
 
             GlobalConfig globalConfig = GlobalConfigUtils.defaults();
             globalConfig.setMetaObjectHandler(new MetaHandler());
+            GlobalConfigUtils.setGlobalConfig(configuration, globalConfig);
 
-            MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
-            factoryBean.setConfiguration(configuration);
-            factoryBean.setGlobalConfig(globalConfig);
-            return factoryBean.getObject();
+            return new DefaultSqlSessionFactory(configuration);
         } catch (Exception e) {
             Rethrower.throwAs(e);
             return null;

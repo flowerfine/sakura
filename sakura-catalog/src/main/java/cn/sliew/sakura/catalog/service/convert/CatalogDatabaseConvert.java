@@ -42,7 +42,7 @@ public enum CatalogDatabaseConvert implements BaseConvert<CatalogDatabase, Catal
     @Override
     public CatalogDatabaseDTO toDto(CatalogDatabase entity) {
         CatalogDatabaseDTO dto = JacksonUtil.deepCopy(entity, CatalogDatabaseDTO.class);
-        if (StringUtils.isNotBlank(entity.getProperties())) {
+        if (entity != null && StringUtils.isNotBlank(entity.getProperties())) {
             Map<String, String> properties = JacksonUtil.parseJsonString(CodecUtil.decrypt(entity.getProperties()), new TypeReference<Map<String, String>>() {
             });
             dto.setProperties(properties);

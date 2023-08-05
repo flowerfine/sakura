@@ -19,9 +19,11 @@
 package cn.sliew.sakura.catalog.service.convert;
 
 import cn.sliew.sakura.catalog.service.dto.CatalogTableDTO;
+import cn.sliew.sakura.common.exception.Rethrower;
 import cn.sliew.sakura.common.util.CodecUtil;
 import cn.sliew.sakura.common.util.JacksonUtil;
 import cn.sliew.sakura.dao.entity.CatalogTable;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.type.TypeReference;
 
@@ -32,21 +34,34 @@ public enum CatalogTableConvert implements BaseConvert<CatalogTable, CatalogTabl
 
     @Override
     public CatalogTable toDo(CatalogTableDTO dto) {
-        CatalogTable entity = JacksonUtil.deepCopy(dto, CatalogTable.class);
-        if (dto.getProperties() != null) {
-            entity.setProperties(CodecUtil.encrypt(JacksonUtil.toJsonString(dto.getProperties())));
+
+        try {
+            CatalogTable entity = new CatalogTable();
+            BeanUtils.copyProperties(entity, dto);
+            if (dto.getProperties() != null) {
+                entity.setProperties(CodecUtil.encrypt(JacksonUtil.toJsonString(dto.getProperties())));
+            }
+            return entity;
+        } catch (Exception e) {
+            Rethrower.throwAs(e);
+            return null;
         }
-        return entity;
     }
 
     @Override
     public CatalogTableDTO toDto(CatalogTable entity) {
-        CatalogTableDTO dto = JacksonUtil.deepCopy(entity, CatalogTableDTO.class);
-        if (entity != null && StringUtils.isNotBlank(entity.getProperties())) {
-            Map<String, String> properties = JacksonUtil.parseJsonString(CodecUtil.decrypt(entity.getProperties()), new TypeReference<Map<String, String>>() {
-            });
-            dto.setProperties(properties);
+        try {
+            CatalogTableDTO dto = new CatalogTableDTO();
+            BeanUtils.copyProperties(dto, entity);
+            if (entity != null && StringUtils.isNotBlank(entity.getProperties())) {
+                Map<String, String> properties = JacksonUtil.parseJsonString(CodecUtil.decrypt(entity.getProperties()), new TypeReference<Map<String, String>>() {
+                });
+                dto.setProperties(properties);
+            }
+            return dto;
+        } catch (Exception e) {
+            Rethrower.throwAs(e);
+            return null;
         }
-        return dto;
     }
 }

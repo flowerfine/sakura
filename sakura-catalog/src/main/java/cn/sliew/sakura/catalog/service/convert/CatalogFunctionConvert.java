@@ -19,19 +19,34 @@
 package cn.sliew.sakura.catalog.service.convert;
 
 import cn.sliew.sakura.catalog.service.dto.CatalogFunctionDTO;
-import cn.sliew.sakura.common.util.JacksonUtil;
+import cn.sliew.sakura.common.exception.Rethrower;
 import cn.sliew.sakura.dao.entity.CatalogFunction;
+import org.apache.commons.beanutils.BeanUtils;
 
 public enum CatalogFunctionConvert implements BaseConvert<CatalogFunction, CatalogFunctionDTO> {
     INSTANCE;
 
     @Override
     public CatalogFunction toDo(CatalogFunctionDTO dto) {
-        return JacksonUtil.deepCopy(dto, CatalogFunction.class);
+        try {
+            CatalogFunction entity = new CatalogFunction();
+            BeanUtils.copyProperties(entity, dto);
+            return entity;
+        } catch (Exception e) {
+            Rethrower.throwAs(e);
+            return null;
+        }
     }
 
     @Override
     public CatalogFunctionDTO toDto(CatalogFunction entity) {
-        return JacksonUtil.deepCopy(entity, CatalogFunctionDTO.class);
+        try {
+            CatalogFunctionDTO dto = new CatalogFunctionDTO();
+            BeanUtils.copyProperties(dto, entity);
+            return dto;
+        } catch (Exception e) {
+            Rethrower.throwAs(e);
+            return null;
+        }
     }
 }

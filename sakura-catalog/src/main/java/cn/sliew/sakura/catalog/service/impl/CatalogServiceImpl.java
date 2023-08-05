@@ -71,7 +71,10 @@ public class CatalogServiceImpl implements CatalogService {
                     .eq(CatalogDatabase::getCatalog, catalog)
                     .eq(CatalogDatabase::getName, database);
             CatalogDatabase record = catalogDatabaseMapper.selectOne(queryWrapper);
-            return Optional.ofNullable(CatalogDatabaseConvert.INSTANCE.toDto(record));
+            if (record == null) {
+                return Optional.empty();
+            }
+            return Optional.of(CatalogDatabaseConvert.INSTANCE.toDto(record));
         }
     }
 

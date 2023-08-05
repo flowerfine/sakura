@@ -24,6 +24,7 @@ import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler;
 import com.baomidou.mybatisplus.core.toolkit.GlobalConfigUtils;
+import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.io.Resources;
@@ -31,7 +32,6 @@ import org.apache.ibatis.logging.slf4j.Slf4jImpl;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 import javax.sql.DataSource;
@@ -75,8 +75,6 @@ public enum MybatisUtil {
 
     private static SqlSessionFactory createSqlSessionFactory(DataSource dataSource) {
         try {
-            GlobalConfig globalConfig = GlobalConfigUtils.defaults();
-            globalConfig.setMetaObjectHandler(new MetaHandler());
 
             MybatisConfiguration configuration = new MybatisConfiguration();
             configuration.setDefaultEnumTypeHandler(MybatisEnumTypeHandler.class);
@@ -87,9 +85,13 @@ public enum MybatisUtil {
             configuration.setCacheEnabled(false);
             addMappers(configuration, getMapperXmls());
 
-            GlobalConfigUtils.setGlobalConfig(configuration, globalConfig);
+            GlobalConfig globalConfig = GlobalConfigUtils.defaults();
+            globalConfig.setMetaObjectHandler(new MetaHandler());
 
-            return new DefaultSqlSessionFactory(configuration);
+            MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
+            factoryBean.setConfiguration(configuration);
+            factoryBean.setGlobalConfig(globalConfig);
+            return factoryBean.getObject();
         } catch (Exception e) {
             Rethrower.throwAs(e);
             return null;

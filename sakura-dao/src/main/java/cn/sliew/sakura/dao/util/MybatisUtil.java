@@ -89,9 +89,8 @@ public enum MybatisUtil {
             configuration.setCacheEnabled(false);
             addMappers(configuration, getMapperXmls());
 
-            GlobalConfig globalConfig = GlobalConfigUtils.defaults();
+            GlobalConfig globalConfig = GlobalConfigUtils.getGlobalConfig(configuration);
             globalConfig.setMetaObjectHandler(new MetaHandler());
-            GlobalConfigUtils.setGlobalConfig(configuration, globalConfig);
 
             return new DefaultSqlSessionFactory(configuration);
         } catch (Exception e) {

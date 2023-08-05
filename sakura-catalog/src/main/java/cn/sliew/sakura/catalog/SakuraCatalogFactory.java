@@ -23,6 +23,7 @@ import org.apache.flink.table.catalog.Catalog;
 import org.apache.flink.table.factories.CatalogFactory;
 import org.apache.flink.table.factories.FactoryUtil;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,6 +44,11 @@ public class SakuraCatalogFactory implements CatalogFactory {
         options.add(USERNAME);
         options.add(PASSWORD);
         return options;
+    }
+
+    @Override
+    public Set<ConfigOption<?>> optionalOptions() {
+        return Collections.emptySet();
     }
 
     @Override

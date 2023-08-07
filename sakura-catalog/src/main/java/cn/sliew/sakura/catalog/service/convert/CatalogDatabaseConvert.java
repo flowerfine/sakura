@@ -23,7 +23,6 @@ import cn.sliew.sakura.common.exception.Rethrower;
 import cn.sliew.sakura.common.util.CodecUtil;
 import cn.sliew.sakura.common.util.JacksonUtil;
 import cn.sliew.sakura.dao.entity.CatalogDatabase;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.type.TypeReference;
 
@@ -36,7 +35,10 @@ public enum CatalogDatabaseConvert implements BaseConvert<CatalogDatabase, Catal
     public CatalogDatabase toDo(CatalogDatabaseDTO dto) {
         try {
             CatalogDatabase entity = new CatalogDatabase();
-            BeanUtils.copyProperties(entity, dto);
+            Util.copyProperties(dto, entity);
+            entity.setCatalog(dto.getCatalog());
+            entity.setName(dto.getName());
+            entity.setRemark(dto.getRemark());
             if (dto.getProperties() != null) {
                 entity.setProperties(CodecUtil.encrypt(JacksonUtil.toJsonString(dto.getProperties())));
             }
@@ -51,7 +53,10 @@ public enum CatalogDatabaseConvert implements BaseConvert<CatalogDatabase, Catal
     public CatalogDatabaseDTO toDto(CatalogDatabase entity) {
         try {
             CatalogDatabaseDTO dto = new CatalogDatabaseDTO();
-            BeanUtils.copyProperties(dto, entity);
+            Util.copyProperties(entity, dto);
+            dto.setCatalog(entity.getCatalog());
+            dto.setName(entity.getName());
+            dto.setRemark(entity.getRemark());
             if (entity != null && StringUtils.isNotBlank(entity.getProperties())) {
                 Map<String, String> properties = JacksonUtil.parseJsonString(CodecUtil.decrypt(entity.getProperties()), new TypeReference<Map<String, String>>() {
                 });

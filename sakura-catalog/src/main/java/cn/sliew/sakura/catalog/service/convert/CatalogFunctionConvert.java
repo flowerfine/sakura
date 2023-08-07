@@ -21,7 +21,6 @@ package cn.sliew.sakura.catalog.service.convert;
 import cn.sliew.sakura.catalog.service.dto.CatalogFunctionDTO;
 import cn.sliew.sakura.common.exception.Rethrower;
 import cn.sliew.sakura.dao.entity.CatalogFunction;
-import org.apache.commons.beanutils.BeanUtils;
 
 public enum CatalogFunctionConvert implements BaseConvert<CatalogFunction, CatalogFunctionDTO> {
     INSTANCE;
@@ -30,7 +29,11 @@ public enum CatalogFunctionConvert implements BaseConvert<CatalogFunction, Catal
     public CatalogFunction toDo(CatalogFunctionDTO dto) {
         try {
             CatalogFunction entity = new CatalogFunction();
-            BeanUtils.copyProperties(entity, dto);
+            Util.copyProperties(dto, entity);
+            entity.setName(dto.getName());
+            entity.setClassName(dto.getClassName());
+            entity.setFunctionLanguage(dto.getFunctionLanguage());
+            entity.setRemark(dto.getRemark());
             return entity;
         } catch (Exception e) {
             Rethrower.throwAs(e);
@@ -42,7 +45,11 @@ public enum CatalogFunctionConvert implements BaseConvert<CatalogFunction, Catal
     public CatalogFunctionDTO toDto(CatalogFunction entity) {
         try {
             CatalogFunctionDTO dto = new CatalogFunctionDTO();
-            BeanUtils.copyProperties(dto, entity);
+            Util.copyProperties(entity, dto);
+            dto.setName(entity.getName());
+            dto.setClassName(entity.getClassName());
+            dto.setFunctionLanguage(entity.getFunctionLanguage());
+            dto.setRemark(entity.getRemark());
             return dto;
         } catch (Exception e) {
             Rethrower.throwAs(e);

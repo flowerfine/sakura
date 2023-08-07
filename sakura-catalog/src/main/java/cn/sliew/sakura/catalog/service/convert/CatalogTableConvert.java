@@ -19,11 +19,11 @@
 package cn.sliew.sakura.catalog.service.convert;
 
 import cn.sliew.sakura.catalog.service.dto.CatalogTableDTO;
+import cn.sliew.sakura.catalog.service.dto.SchemaDTO;
 import cn.sliew.sakura.common.exception.Rethrower;
 import cn.sliew.sakura.common.util.CodecUtil;
 import cn.sliew.sakura.common.util.JacksonUtil;
 import cn.sliew.sakura.dao.entity.CatalogTable;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.type.TypeReference;
 
@@ -37,7 +37,15 @@ public enum CatalogTableConvert implements BaseConvert<CatalogTable, CatalogTabl
 
         try {
             CatalogTable entity = new CatalogTable();
-            BeanUtils.copyProperties(entity, dto);
+            Util.copyProperties(dto, entity);
+            entity.setKind(dto.getKind());
+            entity.setName(dto.getName());
+            if (dto.getSchema() != null) {
+                entity.setSchema(JacksonUtil.toJsonString(dto.getSchema()));
+            }
+            entity.setOriginalQuery(dto.getOriginalQuery());
+            entity.setExpandedQuery(dto.getExpandedQuery());
+            entity.setRemark(dto.getRemark());
             if (dto.getProperties() != null) {
                 entity.setProperties(CodecUtil.encrypt(JacksonUtil.toJsonString(dto.getProperties())));
             }
@@ -52,7 +60,15 @@ public enum CatalogTableConvert implements BaseConvert<CatalogTable, CatalogTabl
     public CatalogTableDTO toDto(CatalogTable entity) {
         try {
             CatalogTableDTO dto = new CatalogTableDTO();
-            BeanUtils.copyProperties(dto, entity);
+            Util.copyProperties(entity, dto);
+            dto.setKind(entity.getKind());
+            dto.setName(entity.getName());
+            if (StringUtils.isNotBlank(entity.getSchema())) {
+                dto.setSchema(JacksonUtil.parseJsonString(entity.getSchema(), SchemaDTO.class));
+            }
+            dto.setOriginalQuery(entity.getOriginalQuery());
+            dto.setExpandedQuery(entity.getExpandedQuery());
+            dto.setRemark(entity.getRemark());
             if (entity != null && StringUtils.isNotBlank(entity.getProperties())) {
                 Map<String, String> properties = JacksonUtil.parseJsonString(CodecUtil.decrypt(entity.getProperties()), new TypeReference<Map<String, String>>() {
                 });

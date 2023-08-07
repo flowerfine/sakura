@@ -55,7 +55,6 @@
         <hikaricp.version>4.0.3</hikaricp.version>
         <mysql.version>8.0.28</mysql.version>
         <guava.version>31.0-jre</guava.version>
-        <commons.beanutils.version>1.9.4</commons.beanutils.version>
     </properties>
 
     <licenses>
@@ -165,12 +164,6 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${org.projectlombok.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>${commons.beanutils.version}</version>
             </dependency>
 
             <dependency>

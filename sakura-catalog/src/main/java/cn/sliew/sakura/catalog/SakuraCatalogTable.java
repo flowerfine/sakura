@@ -29,14 +29,26 @@ import java.util.*;
  */
 public class SakuraCatalogTable implements CatalogTable {
 
+    private final TableKind kind;
     private final Schema schema;
     private final Map<String, String> options;
     private final String comment;
 
-    public SakuraCatalogTable(Schema schema, Map<String, String> options, String comment) {
+    public SakuraCatalogTable(TableKind kind, Schema schema, Map<String, String> options, String comment) {
+        this.kind = kind;
         this.schema = schema;
         this.options = options;
         this.comment = comment;
+    }
+
+    @Override
+    public TableKind getTableKind() {
+        return kind;
+    }
+
+    @Override
+    public Schema getUnresolvedSchema() {
+        return schema;
     }
 
     @Override
@@ -51,7 +63,7 @@ public class SakuraCatalogTable implements CatalogTable {
 
     @Override
     public CatalogTable copy(Map<String, String> options) {
-        return new SakuraCatalogTable(schema, new HashMap<>(options), comment);
+        return new SakuraCatalogTable(kind, schema, new HashMap<>(options), comment);
     }
 
     @Override
@@ -66,7 +78,7 @@ public class SakuraCatalogTable implements CatalogTable {
 
     @Override
     public CatalogBaseTable copy() {
-        return new SakuraCatalogTable(schema, new HashMap<>(options), comment);
+        return new SakuraCatalogTable(kind, schema, new HashMap<>(options), comment);
     }
 
     @Override

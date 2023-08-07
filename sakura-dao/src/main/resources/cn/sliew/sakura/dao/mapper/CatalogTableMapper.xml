@@ -41,7 +41,7 @@
 
     <select id="selectByDatabase" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+            t.*
         FROM
             catalog_table t
                 JOIN catalog_database d ON t.database_id = d.id
@@ -49,7 +49,7 @@
             d.catalog_name = #{catalog}
           AND d.`name` = #{database}
           AND t.kind = #{kind}
-        ORDER BY t.'name', t.create_time
+        ORDER BY t.`name`, t.create_time
     </select>
 
     <select id="countByDatabase" resultType="int">
@@ -64,7 +64,7 @@
 
     <select id="selectByName" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+            t.*
         FROM catalog_table t
         JOIN catalog_database d ON t.database_id = d.id
         WHERE

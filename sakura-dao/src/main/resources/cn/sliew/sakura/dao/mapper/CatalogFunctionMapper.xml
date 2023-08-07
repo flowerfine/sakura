@@ -37,7 +37,7 @@
 
     <select id="selectByDatabase" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+            f.*
         FROM catalog_function f
         JOIN catalog_database d ON f.database_id = d.id
         WHERE d.catalog_name = #{catalog}
@@ -55,7 +55,7 @@
 
     <select id="selectByName" resultMap="BaseResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
+            f.*
         FROM catalog_function f
         JOIN catalog_database d ON f.database_id = d.id
         WHERE d.catalog_name = #{catalog}

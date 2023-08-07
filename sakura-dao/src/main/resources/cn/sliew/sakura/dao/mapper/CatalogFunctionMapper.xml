@@ -40,7 +40,7 @@
             f.*
         FROM catalog_function f
         JOIN catalog_database d ON f.database_id = d.id
-        WHERE d.catalog_name = #{catalog}
+        WHERE d.catalog = #{catalog}
         AND d.`name` = #{database}
         ORDER BY f.`name`, f.create_time
     </select>
@@ -49,7 +49,7 @@
         SELECT COUNT(*)
         FROM catalog_function f
                  JOIN catalog_database d ON f.database_id = d.id
-        WHERE d.catalog_name = #{catalog}
+        WHERE d.catalog = #{catalog}
           AND d.`name` = #{database}
     </select>
 
@@ -58,7 +58,7 @@
             f.*
         FROM catalog_function f
         JOIN catalog_database d ON f.database_id = d.id
-        WHERE d.catalog_name = #{catalog}
+        WHERE d.catalog = #{catalog}
         AND d.`name` = #{database}
         AND f.`name` = #{name}
     </select>
@@ -70,7 +70,7 @@
                     FROM (SELECT f.id
                           FROM catalog_function f
                                    JOIN catalog_database d ON f.database_id = d.id
-                          WHERE d.catalog_name = #{catalog}
+                          WHERE d.catalog = #{catalog}
                             AND d.`name` = #{database}
                             AND f.`name` = #{name}) AS ct)
     </delete>

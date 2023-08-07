@@ -46,7 +46,7 @@
             catalog_table t
                 JOIN catalog_database d ON t.database_id = d.id
         WHERE
-            d.catalog_name = #{catalog}
+            d.catalog = #{catalog}
           AND d.`name` = #{database}
           AND t.kind = #{kind}
         ORDER BY t.`name`, t.create_time
@@ -57,7 +57,7 @@
         FROM catalog_table t
                  JOIN catalog_database d ON t.database_id = d.id
         WHERE
-            d.catalog_name = #{catalog}
+            d.catalog = #{catalog}
           AND d.`name` = #{database}
           AND t.kind = #{kind}
     </select>
@@ -68,7 +68,7 @@
         FROM catalog_table t
         JOIN catalog_database d ON t.database_id = d.id
         WHERE
-        d.catalog_name = #{catalog}
+        d.catalog = #{catalog}
         AND d.`name` = #{database}
         AND t.kind = #{kind}
         AND t.`name` = #{name}
@@ -81,7 +81,7 @@
                     FROM (SELECT t.id
                           FROM catalog_table t
                                    JOIN catalog_database d ON t.database_id = d.id
-                          WHERE d.catalog_name = #{catalog}
+                          WHERE d.catalog = #{catalog}
                             AND d.`name` = #{database}
                             AND t.kind = #{kind}
                             AND t.`name` = #{name}) AS ct

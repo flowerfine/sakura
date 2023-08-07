@@ -31,18 +31,30 @@ import java.util.Optional;
  */
 public class SakuraCatalogView implements CatalogView {
 
+    private final TableKind kind;
     private final Schema schema;
     private final Map<String, String> options;
     private final String comment;
     private final String originalQuery;
     private final String expandedQuery;
 
-    public SakuraCatalogView(Schema schema, Map<String, String> options, String comment, String originalQuery, String expandedQuery) {
+    public SakuraCatalogView(TableKind kind, Schema schema, Map<String, String> options, String comment, String originalQuery, String expandedQuery) {
+        this.kind = kind;
         this.schema = schema;
         this.options = options;
         this.comment = comment;
         this.originalQuery = originalQuery;
         this.expandedQuery = expandedQuery;
+    }
+
+    @Override
+    public TableKind getTableKind() {
+        return kind;
+    }
+
+    @Override
+    public Schema getUnresolvedSchema() {
+        return schema;
     }
 
     @Override
@@ -67,7 +79,7 @@ public class SakuraCatalogView implements CatalogView {
 
     @Override
     public CatalogBaseTable copy() {
-        return new SakuraCatalogView(schema, new HashMap<>(options), comment, originalQuery, expandedQuery);
+        return new SakuraCatalogView(kind, schema, new HashMap<>(options), comment, originalQuery, expandedQuery);
     }
 
     @Override

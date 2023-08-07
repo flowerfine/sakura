@@ -21,6 +21,7 @@ package cn.sliew.sakura.catalog.factory;
 import cn.sliew.sakura.catalog.SakuraCatalogView;
 import cn.sliew.sakura.catalog.service.dto.CatalogTableDTO;
 import cn.sliew.sakura.common.dict.CatalogTableKind;
+import org.apache.commons.lang3.EnumUtils;
 import org.apache.flink.table.api.Schema;
 import org.apache.flink.table.catalog.CatalogBaseTable;
 import org.apache.flink.table.catalog.ResolvedCatalogView;
@@ -53,9 +54,9 @@ public enum CatalogViewFactory {
     }
 
     public static SakuraCatalogView toView(CatalogTableDTO catalogTableDTO) {
+        CatalogBaseTable.TableKind kind = EnumUtils.getEnum(CatalogBaseTable.TableKind.class, catalogTableDTO.getKind().getValue());
         Schema schema = CatalogSchemaFactory.toCatalog(catalogTableDTO.getSchema());
-        return new SakuraCatalogView(schema, catalogTableDTO.getProperties(), catalogTableDTO.getRemark(), catalogTableDTO.getOriginalQuery(), catalogTableDTO.getExpandedQuery());
+        return new SakuraCatalogView(kind, schema, catalogTableDTO.getProperties(), catalogTableDTO.getRemark(), catalogTableDTO.getOriginalQuery(), catalogTableDTO.getExpandedQuery());
     }
-
 
 }

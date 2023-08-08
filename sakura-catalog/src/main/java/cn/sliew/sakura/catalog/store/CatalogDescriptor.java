@@ -20,6 +20,7 @@ package cn.sliew.sakura.catalog.store;
 
 import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.configuration.Configuration;
+import org.apache.flink.table.catalog.Catalog;
 
 /**
  * Describes a {@link Catalog} with the catalog name and configuration.
@@ -28,8 +29,7 @@ import org.apache.flink.configuration.Configuration;
  * resembles the "CREATE CATALOG" SQL DDL statement, containing catalog name and catalog
  * configuration. A {@link CatalogDescriptor} could be stored to {@link CatalogStore}.
  *
- * <p>This can be used to register a catalog in the Table API, see {@link
- * TableEnvironment#createCatalog(String, CatalogDescriptor)}.
+ * <p>This can be used to register a catalog in the Table API
  */
 @PublicEvolving
 public class CatalogDescriptor {
@@ -56,7 +56,7 @@ public class CatalogDescriptor {
     /**
      * Creates an instance of this interface.
      *
-     * @param catalogName the name of the catalog
+     * @param catalogName   the name of the catalog
      * @param configuration the configuration of the catalog
      */
     public static CatalogDescriptor of(String catalogName, Configuration configuration) {

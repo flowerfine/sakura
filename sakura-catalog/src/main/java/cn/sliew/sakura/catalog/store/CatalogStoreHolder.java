@@ -20,6 +20,7 @@ package cn.sliew.sakura.catalog.store;
 
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.configuration.ReadableConfig;
+import org.apache.flink.table.catalog.Catalog;
 
 import javax.annotation.Nullable;
 

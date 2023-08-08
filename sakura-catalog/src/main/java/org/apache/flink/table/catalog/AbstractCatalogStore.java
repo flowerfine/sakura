@@ -16,31 +16,34 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.store;
+package org.apache.flink.table.catalog;
 
-import org.apache.flink.annotation.PublicEvolving;
-import org.apache.flink.configuration.ReadableConfig;
-import org.apache.flink.table.catalog.exceptions.CatalogException;
-import org.apache.flink.table.factories.Factory;
+import org.apache.flink.util.Preconditions;
 
-import java.util.Map;
+/** The AbstractCatalogStore class is an abstract base class for implementing a catalog store. */
+public abstract class AbstractCatalogStore implements CatalogStore {
 
-@PublicEvolving
-public interface CatalogStoreFactory extends Factory {
+    /** Catalog store state. */
+    protected boolean isOpen;
 
-    CatalogStore createCatalogStore();
+    /** Opens the catalog store. */
+    @Override
+    public void open() {
+        isOpen = true;
+    }
 
-    void open(Context context) throws CatalogException;
+    /** Closes the catalog store. */
+    @Override
+    public void close() {
+        isOpen = false;
+    }
 
-    void close() throws CatalogException;
-
-    @PublicEvolving
-    interface Context {
-
-        Map<String, String> getOptions();
-
-        ReadableConfig getConfiguration();
-        
-        ClassLoader getClassLoader();
+    /**
+     * Checks whether the catalog store is currently open.
+     *
+     * @throws IllegalStateException if the store is closed
+     */
+    protected void checkOpenState() {
+        Preconditions.checkState(isOpen, "CatalogStore is not opened yet.");
     }
 }

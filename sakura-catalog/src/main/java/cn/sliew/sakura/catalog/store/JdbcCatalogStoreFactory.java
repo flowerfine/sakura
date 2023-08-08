@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.store.impl;
+package cn.sliew.sakura.catalog.store;
 
-import cn.sliew.sakura.catalog.store.CatalogStore;
-import cn.sliew.sakura.catalog.store.CatalogStoreFactory;
+import org.apache.flink.table.catalog.CatalogStore;
+import org.apache.flink.table.factories.CatalogStoreFactory;
 import org.apache.flink.configuration.ConfigOption;
 import org.apache.flink.configuration.ReadableConfig;
 import org.apache.flink.table.catalog.exceptions.CatalogException;
@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static cn.sliew.sakura.catalog.store.impl.JdbcCatalogStoreOptions.*;
+import static cn.sliew.sakura.catalog.store.JdbcCatalogStoreOptions.*;
 
 public class JdbcCatalogStoreFactory implements CatalogStoreFactory {
 

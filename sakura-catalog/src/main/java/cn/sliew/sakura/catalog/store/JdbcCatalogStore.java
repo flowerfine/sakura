@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.store.impl;
+package cn.sliew.sakura.catalog.store;
 
 import cn.sliew.sakura.catalog.service.CatalogStoreService;
 import cn.sliew.sakura.catalog.service.dto.CatalogStoreDTO;
 import cn.sliew.sakura.catalog.service.impl.CatalogStoreServiceImpl;
-import cn.sliew.sakura.catalog.store.AbstractCatalogStore;
-import cn.sliew.sakura.catalog.store.CatalogDescriptor;
+import org.apache.flink.table.catalog.AbstractCatalogStore;
+import org.apache.flink.table.catalog.CatalogDescriptor;
 import cn.sliew.sakura.dao.util.MybatisUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.flink.table.catalog.exceptions.CatalogException;

@@ -16,25 +16,32 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.store.impl;
+package org.apache.flink.table.factories;
 
-import org.apache.flink.configuration.ConfigOption;
-import org.apache.flink.configuration.ConfigOptions;
+import org.apache.flink.annotation.PublicEvolving;
+import org.apache.flink.configuration.ReadableConfig;
+import org.apache.flink.table.catalog.CatalogStore;
+import org.apache.flink.table.catalog.exceptions.CatalogException;
+import org.apache.flink.table.factories.Factory;
 
-public enum JdbcCatalogStoreOptions {
-    ;
+import java.util.Map;
 
-    public static final String IDENTIFIER = "jdbc";
+@PublicEvolving
+public interface CatalogStoreFactory extends Factory {
 
-    public static final ConfigOption<String> DRIVER =
-            ConfigOptions.key("driver").stringType().noDefaultValue();
+    CatalogStore createCatalogStore();
 
-    public static final ConfigOption<String> JDBC_URL =
-            ConfigOptions.key("jdbcUrl").stringType().noDefaultValue();
+    void open(Context context) throws CatalogException;
 
-    public static final ConfigOption<String> USERNAME =
-            ConfigOptions.key("username").stringType().noDefaultValue();
+    void close() throws CatalogException;
 
-    public static final ConfigOption<String> PASSWORD =
-            ConfigOptions.key("password").stringType().noDefaultValue();
+    @PublicEvolving
+    interface Context {
+
+        Map<String, String> getOptions();
+
+        ReadableConfig getConfiguration();
+
+        ClassLoader getClassLoader();
+    }
 }

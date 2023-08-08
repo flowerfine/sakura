@@ -16,10 +16,9 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.store;
+package org.apache.flink.table.catalog;
 
 import org.apache.flink.annotation.PublicEvolving;
-import org.apache.flink.table.catalog.Catalog;
 import org.apache.flink.table.catalog.exceptions.CatalogException;
 
 import java.util.Optional;

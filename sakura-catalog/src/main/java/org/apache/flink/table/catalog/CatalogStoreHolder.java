@@ -16,11 +16,11 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.store;
+package org.apache.flink.table.catalog;
 
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.configuration.ReadableConfig;
-import org.apache.flink.table.catalog.Catalog;
+import org.apache.flink.table.factories.CatalogStoreFactory;
 
 import javax.annotation.Nullable;
 

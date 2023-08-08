@@ -18,32 +18,23 @@
 
 package cn.sliew.sakura.catalog.store;
 
-import org.apache.flink.util.Preconditions;
+import org.apache.flink.configuration.ConfigOption;
+import org.apache.flink.configuration.ConfigOptions;
 
-/** The AbstractCatalogStore class is an abstract base class for implementing a catalog store. */
-public abstract class AbstractCatalogStore implements CatalogStore {
+public enum JdbcCatalogStoreOptions {
+    ;
 
-    /** Catalog store state. */
-    protected boolean isOpen;
+    public static final String IDENTIFIER = "jdbc";
 
-    /** Opens the catalog store. */
-    @Override
-    public void open() {
-        isOpen = true;
-    }
+    public static final ConfigOption<String> DRIVER =
+            ConfigOptions.key("driver").stringType().noDefaultValue();
 
-    /** Closes the catalog store. */
-    @Override
-    public void close() {
-        isOpen = false;
-    }
+    public static final ConfigOption<String> JDBC_URL =
+            ConfigOptions.key("jdbcUrl").stringType().noDefaultValue();
 
-    /**
-     * Checks whether the catalog store is currently open.
-     *
-     * @throws IllegalStateException if the store is closed
-     */
-    protected void checkOpenState() {
-        Preconditions.checkState(isOpen, "CatalogStore is not opened yet.");
-    }
+    public static final ConfigOption<String> USERNAME =
+            ConfigOptions.key("username").stringType().noDefaultValue();
+
+    public static final ConfigOption<String> PASSWORD =
+            ConfigOptions.key("password").stringType().noDefaultValue();
 }

@@ -16,20 +16,25 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.service;
+package cn.sliew.sakura.catalog.store.impl;
 
-import cn.sliew.sakura.catalog.service.dto.CatalogStoreDTO;
+import org.apache.flink.configuration.ConfigOption;
+import org.apache.flink.configuration.ConfigOptions;
 
-import java.util.List;
-import java.util.Optional;
+public enum JdbcCatalogStoreOptions {
+    ;
 
-public interface CatalogStoreService {
+    public static final String IDENTIFIER = "jdbc";
 
-    List<CatalogStoreDTO> list();
+    public static final ConfigOption<String> DRIVER =
+            ConfigOptions.key("driver").stringType().noDefaultValue();
 
-    Optional<CatalogStoreDTO> get(String catalogName);
+    public static final ConfigOption<String> JDBC_URL =
+            ConfigOptions.key("jdbcUrl").stringType().noDefaultValue();
 
-    void insert(CatalogStoreDTO dto);
+    public static final ConfigOption<String> USERNAME =
+            ConfigOptions.key("username").stringType().noDefaultValue();
 
-    void delete(String catalogName);
+    public static final ConfigOption<String> PASSWORD =
+            ConfigOptions.key("password").stringType().noDefaultValue();
 }

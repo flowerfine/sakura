@@ -16,20 +16,14 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.service;
+package cn.sliew.sakura.catalog.service.dto;
 
-import cn.sliew.sakura.catalog.service.dto.CatalogStoreDTO;
+import lombok.Data;
+import org.apache.flink.configuration.Configuration;
 
-import java.util.List;
-import java.util.Optional;
+@Data
+public class CatalogStoreDTO extends BaseDTO {
 
-public interface CatalogStoreService {
-
-    List<CatalogStoreDTO> list();
-
-    Optional<CatalogStoreDTO> get(String catalogName);
-
-    void insert(CatalogStoreDTO dto);
-
-    void delete(String catalogName);
+    private String catalogName;
+    private Configuration configuration;
 }

@@ -18,39 +18,83 @@
 
 package cn.sliew.sakura.catalog.store.impl;
 
+import cn.sliew.sakura.catalog.service.CatalogStoreService;
+import cn.sliew.sakura.catalog.service.dto.CatalogStoreDTO;
+import cn.sliew.sakura.catalog.service.impl.CatalogStoreServiceImpl;
 import cn.sliew.sakura.catalog.store.AbstractCatalogStore;
 import cn.sliew.sakura.catalog.store.CatalogDescriptor;
+import cn.sliew.sakura.dao.util.MybatisUtil;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.flink.table.catalog.exceptions.CatalogException;
+import org.apache.ibatis.session.SqlSessionFactory;
 
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class JdbcCatalogStore extends AbstractCatalogStore {
 
+    private final String driver;
+    private final String jdbcUrl;
+    private final String username;
+    private final String password;
+    private HikariDataSource dataSource;
+    private CatalogStoreService catalogStoreService;
 
+    public JdbcCatalogStore(String driver, String jdbcUrl, String username, String password) {
+        this.driver = driver;
+        this.jdbcUrl = jdbcUrl;
+        this.username = username;
+        this.password = password;
+    }
+
+    @Override
+    public void open() {
+        super.open();
+        this.dataSource = MybatisUtil.createDataSource(driver, jdbcUrl, username, password);
+        SqlSessionFactory sqlSessionFactory = MybatisUtil.getSqlSessionFactory(dataSource);
+        this.catalogStoreService = new CatalogStoreServiceImpl(sqlSessionFactory);
+    }
+
+    @Override
+    public void close() {
+        super.close();
+        if (dataSource != null && dataSource.isClosed() == false) {
+            dataSource.close();
+        }
+    }
 
     @Override
     public void storeCatalog(String catalogName, CatalogDescriptor catalog) throws CatalogException {
-
+        if (contains(catalogName)) {
+            throw new CatalogException(String.format("Catalog %s's store is already exist.", catalogName));
+        }
+        CatalogStoreDTO dto = new CatalogStoreDTO();
+        dto.setCatalogName(catalog.getCatalogName());
+        dto.setConfiguration(catalog.getConfiguration());
+        catalogStoreService.insert(dto);
     }
 
     @Override
     public void removeCatalog(String catalogName, boolean ignoreIfNotExists) throws CatalogException {
-
+        if (contains(catalogName) == false && ignoreIfNotExists == false) {
+            throw new CatalogException(String.format("Catalog %s's store is not exist", catalogName));
+        }
+        catalogStoreService.delete(catalogName);
     }
 
     @Override
     public Optional<CatalogDescriptor> getCatalog(String catalogName) throws CatalogException {
-        return Optional.empty();
+        return catalogStoreService.get(catalogName).map(dto -> CatalogDescriptor.of(dto.getCatalogName(), dto.getConfiguration()));
     }
 
     @Override
     public Set<String> listCatalogs() throws CatalogException {
-        return null;
+        return catalogStoreService.list().stream().map(CatalogStoreDTO::getCatalogName).collect(Collectors.toSet());
     }
 
     @Override
     public boolean contains(String catalogName) throws CatalogException {
-        return false;
+        return getCatalog(catalogName).isPresent();
     }
 }

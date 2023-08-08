@@ -16,20 +16,21 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.service;
+package cn.sliew.sakura.dao.entity;
 
-import cn.sliew.sakura.catalog.service.dto.CatalogStoreDTO;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
-import java.util.List;
-import java.util.Optional;
+@Data
+@TableName("catalog_store")
+public class CatalogStore extends BaseDO {
 
-public interface CatalogStoreService {
+    private static final long serialVersionUID = 1L;
 
-    List<CatalogStoreDTO> list();
+    @TableField("`catalog_name`")
+    private String catalogName;
 
-    Optional<CatalogStoreDTO> get(String catalogName);
-
-    void insert(CatalogStoreDTO dto);
-
-    void delete(String catalogName);
+    @TableField("configuration")
+    private String configuration;
 }

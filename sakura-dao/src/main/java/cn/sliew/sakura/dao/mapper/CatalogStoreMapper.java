@@ -16,20 +16,13 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.service;
+package cn.sliew.sakura.dao.mapper;
 
-import cn.sliew.sakura.catalog.service.dto.CatalogStoreDTO;
+import cn.sliew.sakura.dao.entity.CatalogStore;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-import java.util.Optional;
+@Mapper
+public interface CatalogStoreMapper extends BaseMapper<CatalogStore> {
 
-public interface CatalogStoreService {
-
-    List<CatalogStoreDTO> list();
-
-    Optional<CatalogStoreDTO> get(String catalogName);
-
-    void insert(CatalogStoreDTO dto);
-
-    void delete(String catalogName);
 }

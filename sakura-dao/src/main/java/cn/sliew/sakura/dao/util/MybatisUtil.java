@@ -101,6 +101,7 @@ public enum MybatisUtil {
 
     private static List<String> getMapperXmls() {
         return Arrays.asList(
+                "cn/sliew/sakura/dao/mapper/CatalogStoreMapper.xml",
                 "cn/sliew/sakura/dao/mapper/CatalogDatabaseMapper.xml",
                 "cn/sliew/sakura/dao/mapper/CatalogFunctionMapper.xml",
                 "cn/sliew/sakura/dao/mapper/CatalogTableMapper.xml"

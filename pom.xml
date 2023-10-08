@@ -36,6 +36,7 @@
         <module>sakura-dao</module>
         <module>sakura-persistence</module>
         <module>sakura-catalog</module>
+        <module>sakura-connectors</module>
     </modules>
 
     <properties>

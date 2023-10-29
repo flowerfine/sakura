@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.apache</groupId>
         <artifactId>apache</artifactId>
-        <version>20</version>
+        <version>23</version>
     </parent>
 
     <groupId>cn.sliew</groupId>
@@ -46,15 +46,14 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <flink.version>1.17.1</flink.version>
+        <flink.version>1.18.0</flink.version>
         <flink.scope>provided</flink.scope>
-        <flink.shaded.jackson.version>2.13.4-16.1</flink.shaded.jackson.version>
-        <flink.shaded.guava.version>30.1.1-jre-16.1</flink.shaded.guava.version>
-        <org.projectlombok.version>1.18.24</org.projectlombok.version>
-        <mybatis.plus.version>3.5.1</mybatis.plus.version>
-        <hikaricp.version>4.0.3</hikaricp.version>
-        <mysql.version>8.0.28</mysql.version>
-        <guava.version>31.0-jre</guava.version>
+        <flink.shaded.jackson.version>2.14.2-17.0</flink.shaded.jackson.version>
+        <flink.shaded.guava.version>31.1-jre-17.0</flink.shaded.guava.version>
+        <org.projectlombok.version>1.18.30</org.projectlombok.version>
+        <mybatis.plus.version>3.5.4</mybatis.plus.version>
+        <hikaricp.version>5.0.1</hikaricp.version>
+        <mysql.version>8.2.0</mysql.version>
     </properties>
 
     <licenses>
@@ -182,9 +181,10 @@
                 <artifactId>HikariCP</artifactId>
                 <version>${hikaricp.version}</version>
             </dependency>
+
             <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
         </dependencies>

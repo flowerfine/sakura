@@ -23,7 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
-import static org.apache.flink.shaded.guava30.com.google.common.base.Preconditions.checkNotNull;
+import static org.apache.flink.shaded.guava31.com.google.common.base.Preconditions.checkNotNull;
+
 
 /**
  * Rethrowing checked exceptions as unchecked ones. Eh, it is sometimes useful...

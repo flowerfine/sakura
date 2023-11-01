@@ -27,7 +27,7 @@ jobs:
           gpg-private-key: ${{ secrets.GPG_SECRET }}
           gpg-passphrase: GPG_PASSWORD
       - name: Publish to Sonatype Nexus
-        run: ./mvnw -B -U -T 4 clean deploy -Poss-release  -DskipTests -Dgpg.passphrase=${{ secrets.GPG_PASSWORD }}
+        run: ./mvnw -B -U -T 1 clean deploy -Poss-release  -DskipTests -Dgpg.passphrase=${{ secrets.GPG_PASSWORD }}
         env:
           OSSRH_USERNAME: ${{ secrets.SONATYPE_USER }}
           OSSRH_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}

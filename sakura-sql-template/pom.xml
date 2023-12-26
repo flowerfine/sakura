@@ -24,33 +24,23 @@
         <groupId>cn.sliew</groupId>
         <artifactId>sakura</artifactId>
         <version>1.0.2-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>sakura-common</artifactId>
+    <artifactId>sakura-sql-template</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-annotation</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.sliew</groupId>
-            <artifactId>milky-common</artifactId>
+            <groupId>${project.parent.groupId}</groupId>
+            <artifactId>sakura-common</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-shaded-jackson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-shaded-guava</artifactId>
+            <artifactId>flink-table-api-java</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <finalName>sql-runner</finalName>
+    </build>
 
 </project>

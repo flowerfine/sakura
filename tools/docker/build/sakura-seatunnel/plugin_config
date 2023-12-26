@@ -1,0 +1,8 @@
+connector-http-base
+connector-cdc-mysql
+connector-jdbc
+connector-kafka
+connector-hudi
+connector-iceberg
+connector-paimon
+connector-doris

@@ -37,6 +37,7 @@
         <module>sakura-persistence</module>
         <module>sakura-catalog</module>
         <module>sakura-connectors</module>
+        <module>sakura-sql-template</module>
     </modules>
 
     <properties>
@@ -52,6 +53,7 @@
         <flink.shaded.jackson.version>2.14.2-17.0</flink.shaded.jackson.version>
         <flink.shaded.guava.version>31.1-jre-17.0</flink.shaded.guava.version>
         <org.projectlombok.version>1.18.30</org.projectlombok.version>
+        <milky.version>1.0.7</milky.version>
         <mybatis.plus.version>3.5.4</mybatis.plus.version>
         <hikaricp.version>5.0.1</hikaricp.version>
         <mysql.version>8.2.0</mysql.version>
@@ -159,6 +161,12 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${org.projectlombok.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cn.sliew</groupId>
+                <artifactId>milky-common</artifactId>
+                <version>${milky.version}</version>
             </dependency>
 
             <dependency>

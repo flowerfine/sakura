@@ -48,10 +48,10 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <flink.version>1.18.0</flink.version>
+        <flink.version>1.18.1</flink.version>
         <flink.scope>provided</flink.scope>
-        <flink.shaded.jackson.version>2.14.2-17.0</flink.shaded.jackson.version>
-        <flink.shaded.guava.version>31.1-jre-17.0</flink.shaded.guava.version>
+        <flink.shaded.jackson.version>2.15.3-18.0</flink.shaded.jackson.version>
+        <flink.shaded.guava.version>32.1.3-jre-18.0</flink.shaded.guava.version>
         <org.projectlombok.version>1.18.30</org.projectlombok.version>
         <milky.version>1.0.7</milky.version>
         <mybatis.plus.version>3.5.4</mybatis.plus.version>

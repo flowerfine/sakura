@@ -21,6 +21,7 @@ package cn.sliew.sakura.catalog.service;
 import cn.sliew.sakura.catalog.service.dto.CatalogDatabaseDTO;
 import cn.sliew.sakura.catalog.service.dto.CatalogFunctionDTO;
 import cn.sliew.sakura.catalog.service.dto.CatalogTableDTO;
+import cn.sliew.sakura.common.dict.catalog.CatalogType;
 import org.apache.flink.table.catalog.exceptions.*;
 
 import java.util.List;
@@ -28,57 +29,57 @@ import java.util.Optional;
 
 public interface CatalogService {
 
-    List<CatalogDatabaseDTO> listDatabases(String catalog);
+    List<CatalogDatabaseDTO> listDatabases(CatalogType type, String catalog);
 
-    Optional<CatalogDatabaseDTO> getDatabase(String catalog, String database);
+    Optional<CatalogDatabaseDTO> getDatabase(CatalogType type, String catalog, String database);
 
-    boolean databaseExists(String catalog, String database);
+    boolean databaseExists(CatalogType type, String catalog, String database);
 
     void insertDatabase(CatalogDatabaseDTO database) throws DatabaseAlreadyExistException;
 
     void updateDatabase(CatalogDatabaseDTO database) throws DatabaseNotExistException;
 
-    void deleteDatabase(String catalog, String database) throws DatabaseNotExistException;
+    void deleteDatabase(CatalogType type, String catalog, String database) throws DatabaseNotExistException;
 
-    boolean isDatabaseEmpty(String catalog, String database);
+    boolean isDatabaseEmpty(CatalogType type, String catalog, String database);
 
-    List<CatalogTableDTO> listTables(String catalog, String database);
+    List<CatalogTableDTO> listTables(CatalogType type, String catalog, String database);
 
-    Optional<CatalogTableDTO> getTable(String catalog, String database, String table);
+    Optional<CatalogTableDTO> getTable(CatalogType type, String catalog, String database, String table);
 
-    boolean tableExists(String catalog, String database, String table);
+    boolean tableExists(CatalogType type, String catalog, String database, String table);
 
-    void insertTable(String catalog, String database, CatalogTableDTO table) throws DatabaseNotExistException, TableAlreadyExistException;
+    void insertTable(CatalogType type, String catalog, String database, CatalogTableDTO table) throws DatabaseNotExistException, TableAlreadyExistException;
 
-    void updateTable(String catalog, String database, CatalogTableDTO table) throws TableNotExistException;
+    void updateTable(CatalogType type, String catalog, String database, CatalogTableDTO table) throws TableNotExistException;
 
-    void renameTable(String catalog, String database, String currentName, String newName) throws TableAlreadyExistException, TableNotExistException;
+    void renameTable(CatalogType type, String catalog, String database, String currentName, String newName) throws TableAlreadyExistException, TableNotExistException;
 
-    void deleteTable(String catalog, String database, String table) throws TableNotExistException;
+    void deleteTable(CatalogType type, String catalog, String database, String table) throws TableNotExistException;
 
-    List<CatalogTableDTO> listViews(String catalog, String database);
+    List<CatalogTableDTO> listViews(CatalogType type, String catalog, String database);
 
-    Optional<CatalogTableDTO> getView(String catalog, String database, String view);
+    Optional<CatalogTableDTO> getView(CatalogType type, String catalog, String database, String view);
 
-    boolean viewExists(String catalog, String database, String view);
+    boolean viewExists(CatalogType type, String catalog, String database, String view);
 
-    void insertView(String catalog, String database, CatalogTableDTO view) throws DatabaseNotExistException, TableAlreadyExistException;
+    void insertView(CatalogType type, String catalog, String database, CatalogTableDTO view) throws DatabaseNotExistException, TableAlreadyExistException;
 
-    void updateView(String catalog, String database, CatalogTableDTO view) throws TableNotExistException;
+    void updateView(CatalogType type, String catalog, String database, CatalogTableDTO view) throws TableNotExistException;
 
-    void renameView(String catalog, String database, String currentName, String newName) throws TableNotExistException, TableAlreadyExistException;
+    void renameView(CatalogType type, String catalog, String database, String currentName, String newName) throws TableNotExistException, TableAlreadyExistException;
 
-    void deleteView(String catalog, String database, String viewName) throws TableNotExistException;
+    void deleteView(CatalogType type, String catalog, String database, String viewName) throws TableNotExistException;
 
-    List<CatalogFunctionDTO> listFunctions(String catalog, String database);
+    List<CatalogFunctionDTO> listFunctions(CatalogType type, String catalog, String database);
 
-    Optional<CatalogFunctionDTO> getFunction(String catalog, String database, String function);
+    Optional<CatalogFunctionDTO> getFunction(CatalogType type, String catalog, String database, String function);
 
-    boolean functionExists(String catalog, String database, String function);
+    boolean functionExists(CatalogType type, String catalog, String database, String function);
 
-    void insertFunction(String catalog, String database, CatalogFunctionDTO function) throws DatabaseNotExistException, FunctionAlreadyExistException;
+    void insertFunction(CatalogType type, String catalog, String database, CatalogFunctionDTO function) throws DatabaseNotExistException, FunctionAlreadyExistException;
 
-    void updateFunction(String catalog, String database, CatalogFunctionDTO function) throws FunctionNotExistException;
+    void updateFunction(CatalogType type, String catalog, String database, CatalogFunctionDTO function) throws FunctionNotExistException;
 
-    void deleteFunction(String catalog, String database, String functionName) throws FunctionNotExistException;
+    void deleteFunction(CatalogType type, String catalog, String database, String functionName) throws FunctionNotExistException;
 }

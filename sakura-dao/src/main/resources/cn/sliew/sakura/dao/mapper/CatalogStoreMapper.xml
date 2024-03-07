@@ -23,13 +23,15 @@
         <result column="id" property="id"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
+        <result column="delete_time" property="deleteTime"/>
+        <result column="type" property="type"/>
         <result column="catalog_name" property="catalogName"/>
         <result column="configuration" property="configuration"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, create_time, update_time,
-        `catalog_name`, configuration
+        id, create_time, update_time, delete_time,
+        `type`, `catalog_name`, configuration
     </sql>
 </mapper>

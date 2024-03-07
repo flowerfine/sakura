@@ -28,12 +28,14 @@ enum Util {
         dest.setId(source.getId());
         dest.setCreateTime(source.getCreateTime());
         dest.setUpdateTime(source.getUpdateTime());
+        dest.setDeleteTime(source.getDeleteTime());
     }
 
     static void copyProperties(BaseDO source, BaseDTO dest) {
         dest.setId(source.getId());
         dest.setCreateTime(source.getCreateTime());
         dest.setUpdateTime(source.getUpdateTime());
+        dest.setDeleteTime(source.getDeleteTime());
     }
 
 }

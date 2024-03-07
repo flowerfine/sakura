@@ -21,6 +21,7 @@ package cn.sliew.sakura.catalog.service.impl;
 import cn.sliew.sakura.catalog.service.CatalogStoreService;
 import cn.sliew.sakura.catalog.service.convert.CatalogStoreConvert;
 import cn.sliew.sakura.catalog.service.dto.CatalogStoreDTO;
+import cn.sliew.sakura.common.dict.catalog.CatalogType;
 import cn.sliew.sakura.dao.entity.CatalogStore;
 import cn.sliew.sakura.dao.mapper.CatalogStoreMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -29,6 +30,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,10 +43,12 @@ public class CatalogStoreServiceImpl implements CatalogStoreService {
     }
 
     @Override
-    public List<CatalogStoreDTO> list() {
+    public List<CatalogStoreDTO> list(CatalogType type) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             CatalogStoreMapper catalogStoreMapper = sqlSession.getMapper(CatalogStoreMapper.class);
             LambdaQueryWrapper<CatalogStore> queryWrapper = Wrappers.lambdaQuery(CatalogStore.class)
+                    .eq(CatalogStore::getType, type)
+                    .isNull(CatalogStore::getDeleteTime)
                     .orderByAsc(CatalogStore::getCatalogName);
             List<CatalogStore> catalogs = catalogStoreMapper.selectList(queryWrapper);
             return CatalogStoreConvert.INSTANCE.toDto(catalogs);
@@ -52,11 +56,13 @@ public class CatalogStoreServiceImpl implements CatalogStoreService {
     }
 
     @Override
-    public Optional<CatalogStoreDTO> get(String catalogName) {
+    public Optional<CatalogStoreDTO> get(CatalogType type, String catalogName) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             CatalogStoreMapper catalogStoreMapper = sqlSession.getMapper(CatalogStoreMapper.class);
             LambdaQueryWrapper<CatalogStore> queryWrapper = Wrappers.lambdaQuery(CatalogStore.class)
-                    .eq(CatalogStore::getCatalogName, catalogName);
+                    .eq(CatalogStore::getType, type)
+                    .eq(CatalogStore::getCatalogName, catalogName)
+                    .isNull(CatalogStore::getDeleteTime);
             CatalogStore catalog = catalogStoreMapper.selectOne(queryWrapper);
             return Optional.ofNullable(catalog).map(CatalogStoreConvert.INSTANCE::toDto);
         }
@@ -73,12 +79,18 @@ public class CatalogStoreServiceImpl implements CatalogStoreService {
     }
 
     @Override
-    public void delete(String catalogName) {
+    public void delete(CatalogType type, String catalogName) {
         try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
             CatalogStoreMapper catalogStoreMapper = sqlSession.getMapper(CatalogStoreMapper.class);
             LambdaUpdateWrapper<CatalogStore> updateWrapper = Wrappers.lambdaUpdate(CatalogStore.class)
-                    .eq(CatalogStore::getCatalogName, catalogName);
-            catalogStoreMapper.delete(updateWrapper);
+                    .eq(CatalogStore::getType, type)
+                    .eq(CatalogStore::getCatalogName, catalogName)
+                    .isNull(CatalogStore::getDeleteTime);
+            CatalogStore record = new CatalogStore();
+            record.setType(type);
+            record.setCatalogName(catalogName);
+            record.setDeleteTime(new Date());
+            catalogStoreMapper.update(record, updateWrapper);
             sqlSession.commit();
         }
     }

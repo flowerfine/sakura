@@ -16,17 +16,18 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.common.dict;
+package cn.sliew.sakura.common.dict.catalog.flink;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonValue;
 
 @Getter
-public enum CatalogConstraintType {
+public enum CatalogFunctionLanguage {
 
-    PRIMARY_KEY("PRIMARY_KEY", "PRIMARY_KEY"),
-    UNIQUE_KEY("UNIQUE_KEY", "UNIQUE_KEY"),
+    JAVA("JAVA", "JAVA"),
+    SCALA("SCALA", "SCALA"),
+    PYTHON("PYTHON", "PYTHON"),
     ;
 
     @JsonValue
@@ -34,7 +35,7 @@ public enum CatalogConstraintType {
     private String value;
     private String label;
 
-    CatalogConstraintType(String value, String label) {
+    CatalogFunctionLanguage(String value, String label) {
         this.value = value;
         this.label = label;
     }

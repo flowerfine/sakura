@@ -34,4 +34,6 @@ public class BaseDTO implements Serializable {
     
     private Date updateTime;
 
+    private Date deleteTime;
+
 }

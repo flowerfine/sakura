@@ -23,6 +23,7 @@
         <result column="id" property="id"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
+        <result column="delete_time" property="deleteTime"/>
         <result column="database_id" property="databaseId"/>
         <result column="kind" property="kind"/>
         <result column="name" property="name"/>
@@ -35,7 +36,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, create_time, update_time,
+        id, create_time, update_time, delete_time,
         database_id, kind, `name`, properties, `schema`, original_query, expanded_query, remark
     </sql>
 
@@ -46,7 +47,8 @@
             catalog_table t
                 JOIN catalog_database d ON t.database_id = d.id
         WHERE
-            d.catalog = #{catalog}
+            d.type = #{type}
+          AND d.catalog = #{catalog}
           AND d.`name` = #{database}
           AND t.kind = #{kind}
         ORDER BY t.`name`, t.create_time
@@ -57,7 +59,8 @@
         FROM catalog_table t
                  JOIN catalog_database d ON t.database_id = d.id
         WHERE
-            d.catalog = #{catalog}
+            d.type = #{type}
+          AND d.catalog = #{catalog}
           AND d.`name` = #{database}
           AND t.kind = #{kind}
     </select>
@@ -68,23 +71,25 @@
         FROM catalog_table t
         JOIN catalog_database d ON t.database_id = d.id
         WHERE
-        d.catalog = #{catalog}
+            d.type = #{type}
+        AND d.catalog = #{catalog}
         AND d.`name` = #{database}
         AND t.kind = #{kind}
         AND t.`name` = #{name}
     </select>
 
-    <delete id="deleteByName">
-        DELETE
-        FROM catalog_table
+    <update id="deleteByName">
+        UPDATE catalog_table
+        SET delete_time = NOW()
         WHERE id = (SELECT ct.id
                     FROM (SELECT t.id
                           FROM catalog_table t
                                    JOIN catalog_database d ON t.database_id = d.id
-                          WHERE d.catalog = #{catalog}
+                          WHERE d.type = #{type}
+                            AND d.catalog = #{catalog}
                             AND d.`name` = #{database}
                             AND t.kind = #{kind}
                             AND t.`name` = #{name}) AS ct
                         )
-    </delete>
+    </update>
 </mapper>

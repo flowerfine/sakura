@@ -18,18 +18,14 @@
 
 package cn.sliew.sakura.common.exception;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.concurrent.Callable;
 import java.util.function.Function;
 
-import static org.apache.flink.shaded.guava31.com.google.common.base.Preconditions.checkNotNull;
-
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Rethrowing checked exceptions as unchecked ones. Eh, it is sometimes useful...
  */
-@Slf4j
 public enum Rethrower {
     ;
 
@@ -129,8 +125,8 @@ public enum Rethrower {
     public static void swallow(final Procedure procedure) {
         try {
             procedure.call();
-        } catch (final Exception e) {
-            log.error("Swallowed error.", e);
+        } catch (Exception unused) {
+
         }
     }
 

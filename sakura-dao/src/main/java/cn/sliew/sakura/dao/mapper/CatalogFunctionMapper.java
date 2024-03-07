@@ -18,6 +18,7 @@
 
 package cn.sliew.sakura.dao.mapper;
 
+import cn.sliew.sakura.common.dict.catalog.CatalogType;
 import cn.sliew.sakura.dao.entity.CatalogFunction;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -29,11 +30,11 @@ import java.util.Optional;
 @Mapper
 public interface CatalogFunctionMapper extends BaseMapper<CatalogFunction> {
 
-    List<CatalogFunction> selectByDatabase(@Param("catalog") String catalog, @Param("database") String database);
+    List<CatalogFunction> selectByDatabase(@Param("type") CatalogType type, @Param("catalog") String catalog, @Param("database") String database);
 
-    int countByDatabase(@Param("catalog") String catalog, @Param("database") String database);
+    int countByDatabase(@Param("type") CatalogType type, @Param("catalog") String catalog, @Param("database") String database);
 
-    Optional<CatalogFunction> selectByName(@Param("catalog") String catalog, @Param("database") String database, @Param("name") String name);
+    Optional<CatalogFunction> selectByName(@Param("type") CatalogType type, @Param("catalog") String catalog, @Param("database") String database, @Param("name") String name);
 
-    int deleteByName(@Param("catalog") String catalog, @Param("database") String database, @Param("name") String name);
+    int deleteByName(@Param("type") CatalogType type, @Param("catalog") String catalog, @Param("database") String database, @Param("name") String name);
 }

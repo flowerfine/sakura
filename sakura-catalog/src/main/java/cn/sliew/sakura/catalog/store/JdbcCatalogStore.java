@@ -21,6 +21,7 @@ package cn.sliew.sakura.catalog.store;
 import cn.sliew.sakura.catalog.service.CatalogStoreService;
 import cn.sliew.sakura.catalog.service.dto.CatalogStoreDTO;
 import cn.sliew.sakura.catalog.service.impl.CatalogStoreServiceImpl;
+import cn.sliew.sakura.common.dict.catalog.CatalogType;
 import org.apache.flink.table.catalog.AbstractCatalogStore;
 import org.apache.flink.table.catalog.CatalogDescriptor;
 import cn.sliew.sakura.dao.util.MybatisUtil;
@@ -70,6 +71,7 @@ public class JdbcCatalogStore extends AbstractCatalogStore {
             throw new CatalogException(String.format("Catalog %s's store is already exist.", catalogName));
         }
         CatalogStoreDTO dto = new CatalogStoreDTO();
+        dto.setType(CatalogType.FLINK);
         dto.setCatalogName(catalog.getCatalogName());
         dto.setConfiguration(catalog.getConfiguration());
         catalogStoreService.insert(dto);
@@ -80,17 +82,18 @@ public class JdbcCatalogStore extends AbstractCatalogStore {
         if (contains(catalogName) == false && ignoreIfNotExists == false) {
             throw new CatalogException(String.format("Catalog %s's store is not exist", catalogName));
         }
-        catalogStoreService.delete(catalogName);
+
+        catalogStoreService.delete(CatalogType.FLINK, catalogName);
     }
 
     @Override
     public Optional<CatalogDescriptor> getCatalog(String catalogName) throws CatalogException {
-        return catalogStoreService.get(catalogName).map(dto -> CatalogDescriptor.of(dto.getCatalogName(), dto.getConfiguration()));
+        return catalogStoreService.get(CatalogType.FLINK, catalogName).map(dto -> CatalogDescriptor.of(dto.getCatalogName(), dto.getConfiguration()));
     }
 
     @Override
     public Set<String> listCatalogs() throws CatalogException {
-        return catalogStoreService.list().stream().map(CatalogStoreDTO::getCatalogName).collect(Collectors.toSet());
+        return catalogStoreService.list(CatalogType.FLINK).stream().map(CatalogStoreDTO::getCatalogName).collect(Collectors.toSet());
     }
 
     @Override

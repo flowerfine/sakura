@@ -18,14 +18,14 @@
 
 package cn.sliew.sakura.catalog.service.convert;
 
+import cn.sliew.milky.common.util.JacksonUtil;
 import cn.sliew.sakura.catalog.service.dto.CatalogStoreDTO;
 import cn.sliew.sakura.common.exception.Rethrower;
 import cn.sliew.sakura.common.util.CodecUtil;
-import cn.sliew.sakura.common.util.JacksonUtil;
 import cn.sliew.sakura.dao.entity.CatalogStore;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.configuration.Configuration;
-import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.type.TypeReference;
 
 import java.util.Map;
 

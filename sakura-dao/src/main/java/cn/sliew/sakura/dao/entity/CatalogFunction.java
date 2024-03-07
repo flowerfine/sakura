@@ -18,7 +18,7 @@
 
 package cn.sliew.sakura.dao.entity;
 
-import cn.sliew.sakura.common.dict.CatalogFunctionLanguage;
+import cn.sliew.sakura.common.dict.catalog.flink.CatalogFunctionLanguage;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

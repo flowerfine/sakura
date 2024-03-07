@@ -19,17 +19,18 @@
 package cn.sliew.sakura.catalog.service;
 
 import cn.sliew.sakura.catalog.service.dto.CatalogStoreDTO;
+import cn.sliew.sakura.common.dict.catalog.CatalogType;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CatalogStoreService {
 
-    List<CatalogStoreDTO> list();
+    List<CatalogStoreDTO> list(CatalogType type);
 
-    Optional<CatalogStoreDTO> get(String catalogName);
+    Optional<CatalogStoreDTO> get(CatalogType type, String catalogName);
 
     void insert(CatalogStoreDTO dto);
 
-    void delete(String catalogName);
+    void delete(CatalogType type, String catalogName);
 }

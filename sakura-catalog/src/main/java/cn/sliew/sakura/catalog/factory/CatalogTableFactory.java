@@ -20,7 +20,7 @@ package cn.sliew.sakura.catalog.factory;
 
 import cn.sliew.sakura.catalog.SakuraCatalogTable;
 import cn.sliew.sakura.catalog.service.dto.CatalogTableDTO;
-import cn.sliew.sakura.common.dict.CatalogTableKind;
+import cn.sliew.sakura.common.dict.catalog.flink.CatalogTableKind;
 import org.apache.commons.lang3.EnumUtils;
 import org.apache.flink.table.api.Schema;
 import org.apache.flink.table.catalog.CatalogBaseTable;

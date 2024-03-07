@@ -16,25 +16,28 @@
  * limitations under the License.
  */
 
-package cn.sliew.sakura.catalog.service.dto;
+package cn.sliew.sakura.common.dict.catalog.flink;
 
-import cn.sliew.sakura.common.dict.catalog.flink.CatalogTableKind;
-import lombok.Data;
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
+import lombok.Getter;
 
-import java.util.Map;
+@Getter
+public enum CatalogColumnType {
 
-/**
- * @see org.apache.flink.table.catalog.DefaultCatalogTable
- * @see org.apache.flink.table.catalog.DefaultCatalogView
- */
-@Data
-public class CatalogTableDTO extends BaseDTO {
+    PHYSICAL("Physical", "Physical"),
+    COMPUTED("Computed", "Computed"),
+    METADATA("Metadata", "Metadata"),
+    WATERMARK("WATERMARK", "WATERMARK"),
+    ;
 
-    private CatalogTableKind kind;
-    private String name;
-    private SchemaDTO schema;
-    private Map<String, String> properties;
-    private String originalQuery;
-    private String expandedQuery;
-    private String remark;
+    @JsonValue
+    @EnumValue
+    private String value;
+    private String label;
+
+    CatalogColumnType(String value, String label) {
+        this.value = value;
+        this.label = label;
+    }
 }

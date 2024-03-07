@@ -18,12 +18,14 @@
 
 package cn.sliew.sakura.catalog.service.dto;
 
+import cn.sliew.sakura.common.dict.catalog.CatalogType;
 import lombok.Data;
 import org.apache.flink.configuration.Configuration;
 
 @Data
 public class CatalogStoreDTO extends BaseDTO {
 
+    private CatalogType type;
     private String catalogName;
     private Configuration configuration;
 }

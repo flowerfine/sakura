@@ -23,6 +23,8 @@
         <result column="id" property="id" />
         <result column="create_time" property="createTime" />
         <result column="update_time" property="updateTime" />
+        <result column="delete_time" property="deleteTime" />
+        <result column="type" property="type" />
         <result column="catalog" property="catalog" />
         <result column="name" property="name" />
         <result column="properties" property="properties" />
@@ -30,8 +32,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, create_time, update_time,
-        catalog, `name`, properties, remark
+        id, create_time, update_time, delete_time,
+        `type`, catalog, `name`, properties, remark
     </sql>
 
 </mapper>

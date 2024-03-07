@@ -18,7 +18,8 @@
 
 package cn.sliew.sakura.dao.mapper;
 
-import cn.sliew.sakura.common.dict.CatalogTableKind;
+import cn.sliew.sakura.common.dict.catalog.CatalogType;
+import cn.sliew.sakura.common.dict.catalog.flink.CatalogTableKind;
 import cn.sliew.sakura.dao.entity.CatalogTable;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -30,11 +31,11 @@ import java.util.Optional;
 @Mapper
 public interface CatalogTableMapper extends BaseMapper<CatalogTable> {
 
-    List<CatalogTable> selectByDatabase(@Param("catalog") String catalog, @Param("database") String database, @Param("kind") CatalogTableKind kind);
+    List<CatalogTable> selectByDatabase(@Param("type") CatalogType type, @Param("catalog") String catalog, @Param("database") String database, @Param("kind") CatalogTableKind kind);
 
-    int countByDatabase(@Param("catalog") String catalog, @Param("database") String database, @Param("kind") CatalogTableKind kind);
+    int countByDatabase(@Param("type") CatalogType type, @Param("catalog") String catalog, @Param("database") String database, @Param("kind") CatalogTableKind kind);
 
-    Optional<CatalogTable> selectByName(@Param("catalog") String catalog, @Param("database") String database, @Param("kind") CatalogTableKind kind, @Param("name") String name);
+    Optional<CatalogTable> selectByName(@Param("type") CatalogType type, @Param("catalog") String catalog, @Param("database") String database, @Param("kind") CatalogTableKind kind, @Param("name") String name);
 
-    int deleteByName(@Param("catalog") String catalog, @Param("database") String database, @Param("kind") CatalogTableKind kind, @Param("name") String name);
+    int deleteByName(@Param("type") CatalogType type, @Param("catalog") String catalog, @Param("database") String database, @Param("kind") CatalogTableKind kind, @Param("name") String name);
 }

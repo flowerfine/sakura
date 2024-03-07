@@ -18,6 +18,7 @@
 
 package cn.sliew.sakura.dao.entity;
 
+import cn.sliew.sakura.common.dict.catalog.CatalogType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -27,6 +28,9 @@ import lombok.Data;
 public class CatalogStore extends BaseDO {
 
     private static final long serialVersionUID = 1L;
+
+    @TableField("`type`")
+    private CatalogType type;
 
     @TableField("`catalog_name`")
     private String catalogName;

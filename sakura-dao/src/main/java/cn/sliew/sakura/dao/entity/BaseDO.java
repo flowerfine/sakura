@@ -40,4 +40,7 @@ public class BaseDO implements Serializable {
     
     @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
+
+    @TableField("delete_time")
+    private Date deleteTime;
 }

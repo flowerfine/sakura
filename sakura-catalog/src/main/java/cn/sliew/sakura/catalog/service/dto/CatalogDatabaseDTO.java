@@ -18,6 +18,7 @@
 
 package cn.sliew.sakura.catalog.service.dto;
 
+import cn.sliew.sakura.common.dict.catalog.CatalogType;
 import lombok.Data;
 
 import java.util.Map;
@@ -28,6 +29,7 @@ import java.util.Map;
 @Data
 public class CatalogDatabaseDTO extends BaseDTO {
 
+    private CatalogType type;
     private String catalog;
     private String name;
     private Map<String, String> properties;

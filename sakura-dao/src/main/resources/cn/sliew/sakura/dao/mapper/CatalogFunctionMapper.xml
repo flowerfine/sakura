@@ -23,6 +23,7 @@
         <result column="id" property="id"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
+        <result column="delete_time" property="deleteTime"/>
         <result column="database_id" property="databaseId"/>
         <result column="name" property="name"/>
         <result column="class_name" property="className"/>
@@ -31,7 +32,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,create_time,update_time,
+        id, create_time, update_time, delete_time,
         database_id, `name`, class_name, function_language, remark
     </sql>
 
@@ -40,7 +41,8 @@
             f.*
         FROM catalog_function f
         JOIN catalog_database d ON f.database_id = d.id
-        WHERE d.catalog = #{catalog}
+        WHERE d.type = #{type}
+        AND d.catalog = #{catalog}
         AND d.`name` = #{database}
         ORDER BY f.`name`, f.create_time
     </select>
@@ -49,7 +51,8 @@
         SELECT COUNT(*)
         FROM catalog_function f
                  JOIN catalog_database d ON f.database_id = d.id
-        WHERE d.catalog = #{catalog}
+        WHERE d.type = #{type}
+          AND d.catalog = #{catalog}
           AND d.`name` = #{database}
     </select>
 
@@ -58,20 +61,22 @@
             f.*
         FROM catalog_function f
         JOIN catalog_database d ON f.database_id = d.id
-        WHERE d.catalog = #{catalog}
+        WHERE d.type = #{type}
+        AND d.catalog = #{catalog}
         AND d.`name` = #{database}
         AND f.`name` = #{name}
     </select>
 
-    <delete id="deleteByName">
-        DELETE
-        FROM catalog_function
+    <update id="deleteByName">
+        UPDATE catalog_function
+        SET delete_time = NOW()
         WHERE id = (SELECT ct.id
                     FROM (SELECT f.id
                           FROM catalog_function f
                                    JOIN catalog_database d ON f.database_id = d.id
-                          WHERE d.catalog = #{catalog}
+                          WHERE d.type = #{type}
+                            AND d.catalog = #{catalog}
                             AND d.`name` = #{database}
                             AND f.`name` = #{name}) AS ct)
-    </delete>
+    </update>
 </mapper>

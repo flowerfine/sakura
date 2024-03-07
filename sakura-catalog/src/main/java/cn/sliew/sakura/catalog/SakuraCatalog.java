@@ -27,6 +27,7 @@ import cn.sliew.sakura.catalog.service.dto.CatalogDatabaseDTO;
 import cn.sliew.sakura.catalog.service.dto.CatalogFunctionDTO;
 import cn.sliew.sakura.catalog.service.dto.CatalogTableDTO;
 import cn.sliew.sakura.catalog.service.impl.CatalogServiceImpl;
+import cn.sliew.sakura.common.dict.catalog.CatalogType;
 import cn.sliew.sakura.dao.util.MybatisUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.flink.table.catalog.*;
@@ -73,19 +74,19 @@ public class SakuraCatalog extends AbstractCatalog {
 
     @Override
     public List<String> listDatabases() throws CatalogException {
-        return catalogService.listDatabases(getName()).stream().map(CatalogDatabaseDTO::getName).collect(Collectors.toList());
+        return catalogService.listDatabases(CatalogType.FLINK, getName()).stream().map(CatalogDatabaseDTO::getName).collect(Collectors.toList());
     }
 
     @Override
     public CatalogDatabase getDatabase(String databaseName) throws DatabaseNotExistException, CatalogException {
-        Optional<CatalogDatabaseDTO> optional = catalogService.getDatabase(getName(), databaseName);
+        Optional<CatalogDatabaseDTO> optional = catalogService.getDatabase(CatalogType.FLINK, getName(), databaseName);
         return optional.map(CatalogDatabaseFactory::toDatabase)
                 .orElseThrow(() -> new DatabaseNotExistException(getName(), databaseName));
     }
 
     @Override
     public boolean databaseExists(String databaseName) throws CatalogException {
-        return catalogService.databaseExists(getName(), databaseName);
+        return catalogService.databaseExists(CatalogType.FLINK, getName(), databaseName);
     }
 
     @Override
@@ -102,7 +103,7 @@ public class SakuraCatalog extends AbstractCatalog {
             }
         }
 
-        if (!cascade && !catalogService.isDatabaseEmpty(getName(), name)) {
+        if (!cascade && !catalogService.isDatabaseEmpty(CatalogType.FLINK, getName(), name)) {
             throw new DatabaseNotEmptyException(getName(), name);
         }
 
@@ -113,7 +114,7 @@ public class SakuraCatalog extends AbstractCatalog {
                 } catch (TableNotExistException ignored) {
                 }
             });
-            catalogService.deleteDatabase(getName(), name);
+            catalogService.deleteDatabase(CatalogType.FLINK, getName(), name);
         } catch (DatabaseNotExistException e) {
             if (!ignoreIfNotExists) {
                 throw e;
@@ -132,7 +133,7 @@ public class SakuraCatalog extends AbstractCatalog {
         if (databaseExists(databaseName) == false) {
             throw new DatabaseNotExistException(getName(), databaseName);
         }
-        return catalogService.listTables(getName(), databaseName).stream().map(CatalogTableDTO::getName).collect(Collectors.toList());
+        return catalogService.listTables(CatalogType.FLINK, getName(), databaseName).stream().map(CatalogTableDTO::getName).collect(Collectors.toList());
     }
 
     @Override
@@ -140,15 +141,15 @@ public class SakuraCatalog extends AbstractCatalog {
         if (databaseExists(databaseName) == false) {
             throw new DatabaseNotExistException(getName(), databaseName);
         }
-        return catalogService.listViews(getName(), databaseName).stream().map(CatalogTableDTO::getName).collect(Collectors.toList());
+        return catalogService.listViews(CatalogType.FLINK, getName(), databaseName).stream().map(CatalogTableDTO::getName).collect(Collectors.toList());
     }
 
     @Override
     public CatalogBaseTable getTable(ObjectPath tablePath) throws TableNotExistException, CatalogException {
         String database = tablePath.getDatabaseName();
         String table = tablePath.getObjectName();
-        Optional<CatalogBaseTable> tableOptional = catalogService.getTable(getName(), database, table).map(CatalogTableFactory::toTable);
-        Optional<CatalogBaseTable> viewOptional = catalogService.getView(getName(), database, table).map(CatalogViewFactory::toView);
+        Optional<CatalogBaseTable> tableOptional = catalogService.getTable(CatalogType.FLINK, getName(), database, table).map(CatalogTableFactory::toTable);
+        Optional<CatalogBaseTable> viewOptional = catalogService.getView(CatalogType.FLINK, getName(), database, table).map(CatalogViewFactory::toView);
         return tableOptional.or(() -> viewOptional).orElseThrow(() -> new TableNotExistException(getName(), tablePath));
     }
 
@@ -156,8 +157,8 @@ public class SakuraCatalog extends AbstractCatalog {
     public boolean tableExists(ObjectPath tablePath) throws CatalogException {
         String database = tablePath.getDatabaseName();
         String table = tablePath.getObjectName();
-        boolean tableExists = catalogService.tableExists(getName(), database, table);
-        boolean viewExists = catalogService.viewExists(getName(), database, table);
+        boolean tableExists = catalogService.tableExists(CatalogType.FLINK, getName(), database, table);
+        boolean viewExists = catalogService.viewExists(CatalogType.FLINK, getName(), database, table);
         return tableExists || viewExists;
     }
 
@@ -170,10 +171,10 @@ public class SakuraCatalog extends AbstractCatalog {
             CatalogBaseTable object = getTable(tablePath);
             switch (object.getTableKind()) {
                 case TABLE:
-                    catalogService.deleteTable(getName(), database, table);
+                    catalogService.deleteTable(CatalogType.FLINK, getName(), database, table);
                     break;
                 case VIEW:
-                    catalogService.deleteView(getName(), database, table);
+                    catalogService.deleteView(CatalogType.FLINK, getName(), database, table);
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown table type: " + object.getTableKind());
@@ -194,10 +195,10 @@ public class SakuraCatalog extends AbstractCatalog {
             CatalogBaseTable object = getTable(tablePath);
             switch (object.getTableKind()) {
                 case TABLE:
-                    catalogService.renameTable(getName(), database, table, newTableName);
+                    catalogService.renameTable(CatalogType.FLINK, getName(), database, table, newTableName);
                     break;
                 case VIEW:
-                    catalogService.renameView(getName(), database, table, newTableName);
+                    catalogService.renameView(CatalogType.FLINK, getName(), database, table, newTableName);
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown table type: " + object.getTableKind());
@@ -218,7 +219,7 @@ public class SakuraCatalog extends AbstractCatalog {
                 CatalogTable catalogTable = (CatalogTable) catalogBaseTable;
                 CatalogTableDTO catalogTableDTO = CatalogTableFactory.fromResolvedTable(table, catalogTable);
                 try {
-                    catalogService.insertTable(getName(), database, catalogTableDTO);
+                    catalogService.insertTable(CatalogType.FLINK, getName(), database, catalogTableDTO);
                     break;
                 } catch (TableAlreadyExistException e) {
                     if (!ignoreIfExists) {
@@ -229,7 +230,7 @@ public class SakuraCatalog extends AbstractCatalog {
                 ResolvedCatalogView catalogView = (ResolvedCatalogView) catalogBaseTable;
                 CatalogTableDTO catalogViewDTO = CatalogViewFactory.fromResolvedView(table, catalogView);
                 try {
-                    catalogService.insertView(getName(), database, catalogViewDTO);
+                    catalogService.insertView(CatalogType.FLINK, getName(), database, catalogViewDTO);
                 } catch (TableAlreadyExistException e) {
                     if (!ignoreIfExists) {
                         throw e;
@@ -256,12 +257,12 @@ public class SakuraCatalog extends AbstractCatalog {
                 case TABLE:
                     CatalogTable catalogTable = (CatalogTable) newTable;
                     CatalogTableDTO catalogTableDTO = CatalogTableFactory.fromResolvedTable(table, catalogTable);
-                    catalogService.updateTable(getName(), database, catalogTableDTO);
+                    catalogService.updateTable(CatalogType.FLINK, getName(), database, catalogTableDTO);
                     break;
                 case VIEW:
                     ResolvedCatalogView catalogView = (ResolvedCatalogView) newTable;
                     CatalogTableDTO catalogViewDTO = CatalogViewFactory.fromResolvedView(table, catalogView);
-                    catalogService.updateView(getName(), database, catalogViewDTO);
+                    catalogService.updateView(CatalogType.FLINK, getName(), database, catalogViewDTO);
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown table type: " + currentTable.getTableKind());
@@ -330,14 +331,14 @@ public class SakuraCatalog extends AbstractCatalog {
         if (databaseExists(dbName) == false) {
             throw new DatabaseNotExistException(getName(), dbName);
         }
-        return catalogService.listFunctions(getName(), dbName).stream().map(CatalogFunctionDTO::getName).collect(Collectors.toList());
+        return catalogService.listFunctions(CatalogType.FLINK, getName(), dbName).stream().map(CatalogFunctionDTO::getName).collect(Collectors.toList());
     }
 
     @Override
     public CatalogFunction getFunction(ObjectPath functionPath) throws FunctionNotExistException, CatalogException {
         String database = functionPath.getDatabaseName();
         String function = functionPath.getObjectName();
-        return catalogService.getFunction(getName(), database, function)
+        return catalogService.getFunction(CatalogType.FLINK, getName(), database, function)
                 .map(CatalogFunctionFactory::toCatalogFunction)
                 .orElseThrow(() -> new FunctionNotExistException(getName(), functionPath));
     }
@@ -346,7 +347,7 @@ public class SakuraCatalog extends AbstractCatalog {
     public boolean functionExists(ObjectPath functionPath) throws CatalogException {
         String database = functionPath.getDatabaseName();
         String function = functionPath.getObjectName();
-        return catalogService.functionExists(getName(), database, function);
+        return catalogService.functionExists(CatalogType.FLINK, getName(), database, function);
     }
 
     @Override
@@ -365,7 +366,7 @@ public class SakuraCatalog extends AbstractCatalog {
         String function = functionPath.getObjectName();
 
         try {
-            catalogService.deleteFunction(getName(), database, function);
+            catalogService.deleteFunction(CatalogType.FLINK, getName(), database, function);
         } catch (FunctionNotExistException e) {
             if (!ignoreIfNotExists) {
                 throw e;

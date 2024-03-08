@@ -38,7 +38,7 @@
         <module>sakura-catalog</module>
         <module>sakura-connectors</module>
         <module>sakura-sql-template</module>
-        <module>sakura-catalog/sakura-catalog-hive</module>
+        <module>sakura-catalog/sakura-catalog-base</module>
     </modules>
 
     <properties>
@@ -52,6 +52,7 @@
         <hive.version>3.1.3</hive.version>
         <flink.version>1.18.1</flink.version>
         <flink.scope>provided</flink.scope>
+        <seatunnel.version>2.3.4</seatunnel.version>
         <guava.version>32.1.3-jre</guava.version>
         <org.projectlombok.version>1.18.30</org.projectlombok.version>
         <milky.version>1.0.12</milky.version>
@@ -149,6 +150,12 @@
                 <artifactId>flink-table-planner_2.12</artifactId>
                 <version>${flink.version}</version>
                 <scope>${flink.scope}</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.seatunnel</groupId>
+                <artifactId>seatunnel-api</artifactId>
+                <version>${seatunnel.version}</version>
             </dependency>
 
             <dependency>

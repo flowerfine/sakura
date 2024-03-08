@@ -22,18 +22,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.sliew</groupId>
-        <artifactId>sakura</artifactId>
+        <artifactId>sakura-catalog</artifactId>
         <version>1.0.2-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>sakura-catalog</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>sakura-catalog-seatunnel</artifactId>
 
-    <modules>
-        <module>sakura-catalog-base</module>
-        <module>sakura-catalog-flink</module>
-        <module>sakura-catalog-hive</module>
-        <module>sakura-catalog-seatunnel</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.seatunnel</groupId>
+            <artifactId>seatunnel-api</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

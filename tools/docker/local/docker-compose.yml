@@ -41,6 +41,23 @@ services:
     networks:
       - sakura
 
+  hive:
+    image: apache/hive:3.1.3
+    container_name: hive
+    depends_on:
+      metastore:
+        condition: service_started
+    environment:
+      - SERVICE_NAME=hiveserver2
+      - IS_RESUME=true
+      - SERVICE_OPTS=-Dhive.metastore.uris=thrift://metastore:9083
+    ports:
+      - 10000:10000
+      - 10002:10002
+    restart: unless-stopped
+    networks:
+      - sakura
+
   metastore:
     image: apache/hive:3.1.3
     container_name: metastore

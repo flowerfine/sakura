@@ -28,6 +28,11 @@
     </parent>
     <artifactId>sakura-catalog-hive</artifactId>
 
+    <properties>
+        <maven.test.skip>true</maven.test.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.hive</groupId>

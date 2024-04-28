@@ -32,7 +32,6 @@
     <modules>
         <module>sakura-catalog-base</module>
         <module>sakura-catalog-flink</module>
-        <module>sakura-catalog-hive</module>
         <module>sakura-catalog-seatunnel</module>
     </modules>
 

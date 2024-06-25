@@ -25,22 +25,10 @@
         <artifactId>sakura</artifactId>
         <version>1.0.2-SNAPSHOT</version>
     </parent>
-    <artifactId>sakura-sql-template</artifactId>
+    <artifactId>sakura-flink</artifactId>
+    <packaging>pom</packaging>
 
-    <dependencies>
-        <dependency>
-            <groupId>${project.parent.groupId}</groupId>
-            <artifactId>sakura-common</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-table-api-java</artifactId>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <finalName>sql-runner</finalName>
-    </build>
-
+    <modules>
+        <module>sakura-sql-template</module>
+    </modules>
 </project>

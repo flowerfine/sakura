@@ -37,8 +37,8 @@
         <module>sakura-persistence</module>
         <module>sakura-catalog</module>
         <module>sakura-connectors</module>
-        <module>sakura-sql-template</module>
         <module>sakura-catalog/sakura-catalog-base</module>
+        <module>sakura-flink</module>
     </modules>
 
     <properties>

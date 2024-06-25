@@ -23,7 +23,7 @@
     <parent>
         <groupId>cn.sliew</groupId>
         <artifactId>sakura</artifactId>
-        <version>1.0.2-SNAPSHOT</version>
+        <version>1.0.4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>sakura-catalog</artifactId>
@@ -32,7 +32,6 @@
     <modules>
         <module>sakura-catalog-base</module>
         <module>sakura-catalog-flink</module>
-        <module>sakura-catalog-hive</module>
         <module>sakura-catalog-seatunnel</module>
     </modules>
 
